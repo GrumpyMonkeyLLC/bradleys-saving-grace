@@ -124,22 +124,22 @@
               <div class="form-section-label">About the Dog</div>
               <div class="form-grid">
                 <div class="form-group">
-                  <label for="dogName">Dog's Name *</label>
+                  <label for="dogName">Dog's Name *</div>
                   <input type="text" id="dogName" name="dogName" placeholder="e.g. Buddy" required>
                 </div>
                 <div class="form-group">
-                  <label for="breed">Breed *</label>
+                  <label for="breed">Breed *</div>
                   <input type="text" id="breed" name="breed" placeholder="e.g. Golden Retriever" required>
                 </div>
               </div>
 
               <div class="form-grid">
                 <div class="form-group">
-                  <label for="color">Color / Markings *</label>
+                  <label for="color">Color / Markings *</div>
                   <input type="text" id="color" name="color" placeholder="e.g. Golden with white chest" required>
                 </div>
                 <div class="form-group">
-                  <label for="size">Size</label>
+                  <label for="size">Size</div>
                   <select id="size" name="size">
                     <option value="">Select size</option>
                     <option>Small (under 25 lbs)</option>
@@ -152,11 +152,11 @@
 
               <div class="form-grid">
                 <div class="form-group">
-                  <label for="age">Age</label>
+                  <label for="age">Age</div>
                   <input type="text" id="age" name="age" placeholder="e.g. 3 years">
                 </div>
                 <div class="form-group">
-                  <label for="gender">Gender</label>
+                  <label for="gender">Gender</div>
                   <select id="gender" name="gender">
                     <option value="">Select</option>
                     <option>Male</option>
@@ -166,18 +166,18 @@
               </div>
 
               <div class="form-group">
-                <label for="microchip">Microchip Number (if known)</label>
+                <label for="microchip">Microchip Number (if known)</div>
                 <input type="text" id="microchip" name="microchip" placeholder="Optional">
               </div>
 
               <div class="form-group">
-                <label for="description">Additional Description</label>
+                <label for="description">Additional Description</div>
                 <textarea id="description" name="description" placeholder="Any distinctive features, collar color, behavioral traits that might help identify your dog..."></textarea>
               </div>
 
               <div class="form-section-label">Where &amp; When</div>
               <div class="form-group">
-                <label for="status">Report Type *</label>
+                <label for="status">Report Type *</div>
                 <select id="status" name="status" required>
                   <option value="">Select type</option>
                   <option value="Lost">Lost — dog ran away or went missing</option>
@@ -187,58 +187,58 @@
 
               <div class="form-grid">
                 <div class="form-group">
-                  <label for="dateLost">Date Lost/Stolen *</label>
+                  <label for="dateLost">Date Lost/Stolen *</div>
                   <input type="date" id="dateLost" name="dateLost" required>
                 </div>
                 <div class="form-group">
-                  <label for="city">City *</label>
+                  <label for="city">City *</div>
                   <input type="text" id="city" name="city" placeholder="e.g. Columbus" required>
                 </div>
               </div>
 
               <div class="form-grid">
                 <div class="form-group">
-                  <label for="state">State *</label>
+                  <label for="state">State *</div>
                   <input type="text" id="state" name="state" placeholder="e.g. OH" maxlength="2" required>
                 </div>
                 <div class="form-group">
-                  <label for="zip">ZIP Code</label>
+                  <label for="zip">ZIP Code</div>
                   <input type="text" id="zip" name="zip" placeholder="e.g. 44203">
                 </div>
               </div>
 
               <div class="form-group">
-                <label for="lastSeenLocation">Last Seen Location / Details</label>
+                <label for="lastSeenLocation">Last Seen Location / Details</div>
                 <textarea id="lastSeenLocation" name="lastSeenLocation" placeholder="Street intersection, park name, or description of where the dog was last seen..."></textarea>
               </div>
 
               <div class="form-section-label">Your Contact Information</div>
               <div class="form-grid">
                 <div class="form-group">
-                  <label for="ownerName">Your Name *</label>
+                  <label for="ownerName">Your Name *</div>
                   <input type="text" id="ownerName" name="ownerName" required>
                 </div>
                 <div class="form-group">
-                  <label for="phone">Phone *</label>
+                  <label for="phone">Phone *</div>
                   <input type="tel" id="phone" name="phone" placeholder="(555) 555-5555" required>
                 </div>
               </div>
 
               <div class="form-group">
-                <label for="email">Email *</label>
+                <label for="email">Email *</div>
                 <input type="email" id="email" name="email" required>
               </div>
 
               <div class="form-section-label">Photos</div>
-              <label class="photo-upload" id="photo-label" for="photos">
+              <div class="photo-upload" id="photo-label" onclick="document.getElementById('photos').click()">
                 <input type="file" id="photos" name="photos" accept="image/*" multiple>
                 <div class="photo-upload__icon">📷</div>
                 <div class="photo-upload__text">
                   <strong>Click to upload photos</strong><br>
-                  JPG, PNG, WEBP · Up to 5 photos · Max 5MB each
+                  JPG, PNG, WEBP · Up to 3 photos · Auto-compressed before upload
                 </div>
                 <div class="photo-upload__preview" id="photo-preview"></div>
-              </label>
+              </div>
 
               <div class="form-group mt-3">
                 <label style="display:flex;align-items:flex-start;gap:.75rem;cursor:pointer;">
@@ -246,9 +246,10 @@
                   <span style="font-size:0.85rem; color:var(--text-mid); font-weight:300;">
                     I consent to Bradley's Saving Grace posting this information publicly to help find my dog. I confirm the information is accurate to the best of my knowledge.
                   </span>
-                </label>
+                </div>
               </div>
 
+              <div id="upload-status" style="font-size:0.85rem;color:var(--text-mid);text-align:center;margin-bottom:.5rem;min-height:1.2em;"></div>
               <button type="submit" class="btn btn--gold btn--full mt-3" id="submit-btn" style="font-size:1rem; padding:1rem;">
                 Submit Report 🐾
               </button>
@@ -302,11 +303,21 @@
     renderNav('Report a Dog')
     renderFooter()
 
-    // Photo preview
-    document.getElementById('photos').addEventListener('change', function() {
-      const preview = document.getElementById('photo-preview')
+    const photosInput = document.getElementById('photos')
+    const preview = document.getElementById('photo-preview')
+    const statusDiv = document.getElementById('upload-status')
+
+    // Show preview when files selected
+    photosInput.addEventListener('change', function() {
       preview.innerHTML = ''
-      Array.from(this.files).slice(0, 5).forEach(file => {
+      const files = Array.from(this.files).slice(0, 3)
+      if (files.length === 0) return
+
+      document.querySelector('.photo-upload__text').innerHTML =
+        `<strong>${files.length} photo${files.length !== 1 ? 's' : ''} selected</strong><br>
+        <small style="opacity:.6;">Will be compressed before upload</small>`
+
+      files.forEach(file => {
         const reader = new FileReader()
         reader.onload = e => {
           const img = document.createElement('img')
@@ -317,19 +328,70 @@
       })
     })
 
-    // Form submit
+    // Compress image using canvas
+    function compressImage(file, maxWidth = 1200, quality = 0.82) {
+      return new Promise((resolve) => {
+        const img = new Image()
+        const url = URL.createObjectURL(file)
+        img.onload = () => {
+          URL.revokeObjectURL(url)
+          const canvas = document.createElement('canvas')
+          let w = img.width, h = img.height
+          if (w > maxWidth) { h = Math.round(h * maxWidth / w); w = maxWidth }
+          canvas.width = w
+          canvas.height = h
+          canvas.getContext('2d').drawImage(img, 0, 0, w, h)
+          canvas.toBlob(blob => resolve(blob), 'image/jpeg', quality)
+        }
+        img.onerror = () => resolve(null)
+        img.src = url
+      })
+    }
+
+    async function uploadPhoto(file) {
+      statusDiv.textContent = 'Compressing photo…'
+      const compressed = await compressImage(file)
+      if (!compressed) throw new Error('Could not compress image')
+
+      statusDiv.textContent = `Uploading photo… (${Math.round(compressed.size/1024)}KB)`
+      const fd = new FormData()
+      fd.append('photo', compressed, 'photo.jpg')
+
+      const res = await fetch('/api/upload-photo', { method: 'POST', body: fd })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || 'Upload failed')
+      statusDiv.textContent = 'Photo uploaded ✓'
+      return data.url
+    }
+
     document.getElementById('report-form').addEventListener('submit', async e => {
       e.preventDefault()
       const btn = document.getElementById('submit-btn')
       const alertEl = document.getElementById('form-alert')
       btn.disabled = true
-      btn.textContent = 'Submitting…'
       alertEl.innerHTML = ''
+      statusDiv.textContent = ''
 
       const form = e.target
       const formData = new FormData(form)
 
-      // Build JSON payload (photos handled separately in production)
+      // Read files directly from input at submit time
+      const files = Array.from(photosInput.files).slice(0, 1)
+
+      let photoUrl = ''
+      if (files.length > 0) {
+        btn.textContent = 'Uploading photo…'
+        try {
+          photoUrl = await uploadPhoto(files[0])
+        } catch (err) {
+          alertEl.innerHTML = `<div class="alert alert--error">Photo upload failed: ${err.message}. Submitting without photo.</div>`
+          statusDiv.textContent = ''
+        }
+      }
+
+      btn.textContent = 'Submitting report…'
+      statusDiv.textContent = 'Saving report…'
+
       const payload = {
         dogName:          formData.get('dogName'),
         breed:            formData.get('breed'),
@@ -348,6 +410,7 @@
         ownerName:        formData.get('ownerName'),
         phone:            formData.get('phone'),
         email:            formData.get('email'),
+        photoUrl,
       }
 
       try {
@@ -362,14 +425,16 @@
           document.getElementById('success-state').style.display = 'block'
           window.scrollTo({ top: 0, behavior: 'smooth' })
         } else {
-          alertEl.innerHTML = `<div class="alert alert--error">${data.error || 'Submission failed. Please try again.'}</div>`
+          alertEl.innerHTML = `<div class="alert alert--error">${data.error || 'Submission failed.'}</div>`
           btn.disabled = false
           btn.textContent = 'Submit Report 🐾'
+          statusDiv.textContent = ''
         }
       } catch {
-        alertEl.innerHTML = `<div class="alert alert--error">Network error. Please check your connection and try again.</div>`
+        alertEl.innerHTML = `<div class="alert alert--error">Network error. Please try again.</div>`
         btn.disabled = false
         btn.textContent = 'Submit Report 🐾'
+        statusDiv.textContent = ''
       }
     })
   </script>
