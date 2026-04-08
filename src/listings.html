@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lost Dogs — Bradley's Saving Grace</title>
+  <link rel="icon" href="/images/favicon.png" type="image/png">
+  <link rel="stylesheet" href="./styles/main.css">
+  <style>
+    .page-hero { background: var(--brown-dark); padding: 4rem 2rem 3rem; text-align: center; }
+    .page-hero h1 { color: #fff; font-size: clamp(2rem, 5vw, 3rem); }
+    .page-hero p { color: rgba(255,255,255,0.5); margin-top: 0.75rem; }
+
+    .filters-bar {
+      background: var(--warm-white);
+      border-bottom: 1px solid var(--border);
+      padding: 1.25rem 2rem;
+      position: sticky; top: 56px; z-index: 50;
+    }
+    .filters-bar__inner {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; gap: 1rem; flex-wrap: wrap; align-items: center;
+    }
+    .filters-bar input,
+    .filters-bar select {
+      padding: 0.55rem 0.9rem;
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.85rem;
+      background: var(--cream);
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .filters-bar input:focus,
+    .filters-bar select:focus { border-color: var(--gold); }
+    .filters-bar input { flex: 1; min-width: 200px; }
+    .filter-count { margin-left: auto; font-size: 0.82rem; color: var(--text-light); }
+
+    .listings-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .dog-card {
+      cursor: pointer;
+    }
+    .dog-card .card__img { transition: transform 0.3s; }
+    .dog-card:hover .card__img { transform: scale(1.03); }
+
+    .card__img-wrap { overflow: hidden; }
+
+    /* MODAL */
+    .modal-overlay {
+      position: fixed; inset: 0; z-index: 1000;
+      background: rgba(30, 15, 5, 0.7);
+      display: flex; align-items: center; justify-content: center;
+      padding: 1rem;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.25s;
+    }
+    .modal-overlay.open { opacity: 1; pointer-events: all; }
+    .modal {
+      background: var(--warm-white);
+      border-radius: var(--radius);
+      max-width: 680px; width: 100%;
+      max-height: 90vh; overflow-y: auto;
+      transform: translateY(16px);
+      transition: transform 0.25s;
+    }
+    .modal-overlay.open .modal { transform: translateY(0); }
+    .modal__img { width: 100%; max-height: 340px; object-fit: cover; border-radius: var(--radius) var(--radius) 0 0; }
+    .modal__img-placeholder {
+      width: 100%; height: 200px;
+      background: linear-gradient(135deg,#ede0d0,#f5ece0);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 4rem; border-radius: var(--radius) var(--radius) 0 0;
+    }
+    .modal__body { padding: 2rem; }
+    .modal__header { display: flex; justify-content: space-between; align-items: start; margin-bottom: 1.25rem; }
+    .modal__title { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--brown-dark); }
+    .modal__close {
+      background: none; border: none; font-size: 1.5rem;
+      cursor: pointer; color: var(--text-light); line-height: 1;
+      padding: 0.25rem;
+    }
+    .modal__close:hover { color: var(--text); }
+    .modal__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 1.5rem; margin: 1.25rem 0; }
+    .modal__field label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-light); display: block; margin-bottom: 0.15rem; }
+    .modal__field span { font-size: 0.95rem; color: var(--text-mid); }
+    .modal__contact {
+      background: var(--cream);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      margin-top: 1.5rem;
+      border: 1px solid var(--border);
+    }
+    .modal__contact h4 { font-family: 'Playfair Display', serif; font-size: 1rem; margin-bottom: 0.75rem; }
+
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 4rem 2rem;
+      color: var(--text-light);
+    }
+    .empty-state p { margin-top: 0.5rem; font-size: 0.9rem; }
+
+    .load-more { display: flex; justify-content: center; margin-top: 3rem; }
+  </style>
+</head>
+<body>
+  <div id="site-nav"></div>
+
+  <div class="page-hero">
+    <span class="eyebrow">Community Board</span>
+    <h1>Lost &amp; <em>Stolen Dogs</em></h1>
+    <p>Help bring them home. Share these listings in your community.</p>
+  </div>
+
+  <div class="filters-bar">
+    <div class="filters-bar__inner">
+      <input type="text" id="search" placeholder="🔍 Search by name, breed, city…">
+      <select id="filter-status">
+        <option value="">All Reports</option>
+        <option value="Lost">Lost</option>
+        <option value="Stolen">Stolen</option>
+        <option value="Found">Found / Reunited</option>
+      </select>
+      <select id="filter-state">
+        <option value="">All States</option>
+      </select>
+      <span class="filter-count" id="filter-count"></span>
+    </div>
+  </div>
+
+  <section class="section" style="background:var(--cream); padding-top:2rem;">
+    <div class="container">
+      <div class="listings-grid" id="listings-grid">
+        <div class="empty-state">
+          <div style="font-size:2.5rem;">🐕</div>
+          <p>Loading listings…</p>
+        </div>
+      </div>
+      <div class="load-more" id="load-more-wrap" style="display:none;">
+        <button class="btn btn--brown" id="load-more-btn">Load More</button>
+      </div>
+    </div>
+  </section>
+
+  <div id="site-footer"></div>
+
+  <!-- MODAL -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal" id="modal-box">
+      <div id="modal-content"></div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { renderNav, renderFooter } from './components/layout.js'
+    renderNav('Lost Dogs')
+    renderFooter()
+
+    let allDogs = []
+    let filtered = []
+    let page = 0
+    const PER_PAGE = 12
+
+    async function loadDogs() {
+      try {
+        const res = await fetch('/api/lost-dogs?limit=200')
+        const data = await res.json()
+        allDogs = data.dogs || []
+        populateStateFilter()
+        applyFilters()
+      } catch {
+        document.getElementById('listings-grid').innerHTML =
+          `<div class="empty-state"><div style="font-size:2.5rem;">😞</div><p>Could not load listings. Please try again.</p></div>`
+      }
+    }
+
+    function populateStateFilter() {
+      const states = [...new Set(allDogs.map(d => d.state).filter(Boolean))].sort()
+      const sel = document.getElementById('filter-state')
+      states.forEach(s => {
+        const o = document.createElement('option')
+        o.value = s; o.textContent = s
+        sel.appendChild(o)
+      })
+    }
+
+    function applyFilters() {
+      const q = document.getElementById('search').value.toLowerCase()
+      const status = document.getElementById('filter-status').value
+      const state = document.getElementById('filter-state').value
+      filtered = allDogs.filter(dog => {
+        const matchQ = !q ||
+          dog.name?.toLowerCase().includes(q) ||
+          dog.breed?.toLowerCase().includes(q) ||
+          dog.city?.toLowerCase().includes(q) ||
+          dog.color?.toLowerCase().includes(q)
+        const matchStatus = !status || dog.status === status
+        const matchState = !state || dog.state === state
+        return matchQ && matchStatus && matchState
+      })
+      document.getElementById('filter-count').textContent =
+        filtered.length === 0 ? 'No results' :
+        filtered.length === 1 ? '1 dog' : `${filtered.length} dogs`
+      page = 0
+      renderPage()
+    }
+
+    function renderPage() {
+      const grid = document.getElementById('listings-grid')
+      const slice = filtered.slice(0, (page + 1) * PER_PAGE)
+      if (slice.length === 0) {
+        grid.innerHTML = `<div class="empty-state"><div style="font-size:2.5rem;">🐕</div><p>No dogs match your search.</p><p><a href="./report.html" class="btn btn--brown mt-2">Report a Lost Dog</a></p></div>`
+        document.getElementById('load-more-wrap').style.display = 'none'
+        return
+      }
+      grid.innerHTML = slice.map(dog => dogCardHTML(dog)).join('')
+      grid.querySelectorAll('.dog-card').forEach(card => {
+        card.addEventListener('click', () => openModal(card.dataset.id))
+      })
+      const hasMore = filtered.length > slice.length
+      document.getElementById('load-more-wrap').style.display = hasMore ? 'flex' : 'none'
+    }
+
+    function dogCardHTML(dog) {
+      const img = dog.photoUrl
+        ? `<div class="card__img-wrap"><img src="${dog.photoUrl}" alt="${dog.name}" class="card__img"></div>`
+        : `<div class="card__img-wrap"><div class="card__img card__img--placeholder">🐕</div></div>`
+      return `
+        <div class="card dog-card" data-id="${dog.id}">
+          ${img}
+          <div class="card__body">
+            <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:.4rem;">
+              <div class="card__title">${dog.name || 'Unknown'}</div>
+              <span class="badge badge--${(dog.status||'').toLowerCase()}">${dog.status}</span>
+            </div>
+            <div class="card__meta">📍 ${dog.city || ''}, ${dog.state || ''}</div>
+            <div class="card__desc">${dog.breed || ''} · ${dog.color || ''}</div>
+            <div class="card__meta mt-1">Missing since ${formatDate(dog.dateLost)}</div>
+          </div>
+        </div>`
+    }
+
+    function openModal(id) {
+      const dog = allDogs.find(d => d.id == id)
+      if (!dog) return
+      const img = dog.photoUrl
+        ? `<img src="${dog.photoUrl}" alt="${dog.name}" class="modal__img">`
+        : `<div class="modal__img-placeholder">🐕</div>`
+      document.getElementById('modal-content').innerHTML = `
+        ${img}
+        <div class="modal__body">
+          <div class="modal__header">
+            <div>
+              <div class="modal__title">${dog.name}</div>
+              <span class="badge badge--${(dog.status||'').toLowerCase()}">${dog.status}</span>
+            </div>
+            <button class="modal__close" id="modal-close-btn">✕</button>
+          </div>
+          <div class="modal__grid">
+            <div class="modal__field"><label>Breed</label><span>${dog.breed || '—'}</span></div>
+            <div class="modal__field"><label>Color</label><span>${dog.color || '—'}</span></div>
+            <div class="modal__field"><label>Size</label><span>${dog.size || '—'}</span></div>
+            <div class="modal__field"><label>Gender</label><span>${dog.gender || '—'}</span></div>
+            <div class="modal__field"><label>Age</label><span>${dog.age || '—'}</span></div>
+            <div class="modal__field"><label>Microchip</label><span>${dog.microchip || 'Unknown'}</span></div>
+            <div class="modal__field"><label>Last Seen</label><span>${dog.city || ''}, ${dog.state || ''}</span></div>
+            <div class="modal__field"><label>Date Lost</label><span>${formatDate(dog.dateLost)}</span></div>
+          </div>
+          ${dog.lastSeenLocation ? `<p style="font-size:.9rem;color:var(--text-mid);margin-bottom:1rem;"><strong>Location details:</strong> ${dog.lastSeenLocation}</p>` : ''}
+          ${dog.description ? `<p style="font-size:.9rem;color:var(--text-mid);"><strong>Description:</strong> ${dog.description}</p>` : ''}
+          <div class="modal__contact">
+            <h4>📞 Contact Owner</h4>
+            <p style="font-size:.9rem;color:var(--text-mid);">${dog.ownerName || ''} · ${dog.phone || ''}</p>
+            ${dog.email ? `<a href="mailto:${dog.email}" class="btn btn--brown mt-2" style="padding:.55rem 1.25rem;font-size:.82rem;">Send Email</a>` : ''}
+          </div>
+        </div>`
+      document.getElementById('modal-overlay').classList.add('open')
+      document.getElementById('modal-close-btn').addEventListener('click', closeModal)
+    }
+
+    function closeModal() {
+      document.getElementById('modal-overlay').classList.remove('open')
+    }
+
+    document.getElementById('modal-overlay').addEventListener('click', e => {
+      if (e.target === document.getElementById('modal-overlay')) closeModal()
+    })
+
+    document.getElementById('load-more-btn').addEventListener('click', () => {
+      page++
+      renderPage()
+    })
+
+    let searchTimer
+    document.getElementById('search').addEventListener('input', () => {
+      clearTimeout(searchTimer)
+      searchTimer = setTimeout(applyFilters, 300)
+    })
+    document.getElementById('filter-status').addEventListener('change', applyFilters)
+    document.getElementById('filter-state').addEventListener('change', applyFilters)
+
+    // Check for ?id= param to open modal directly
+    const params = new URLSearchParams(window.location.search)
+    const directId = params.get('id')
+
+    function formatDate(d) {
+      if (!d) return '—'
+      return new Date(d).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+    }
+
+    loadDogs().then(() => {
+      if (directId) openModal(directId)
+    })
+  </script>
+</body>
+</html>
