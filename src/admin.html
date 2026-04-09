@@ -107,9 +107,14 @@
   </style>
 </head>
 <body>
+  
   <div class="admin-nav">
     <div class="admin-nav__title">Bradley's Saving Grace <span>Admin Panel</span></div>
-    <a href="/index.html" style="color:rgba(255,255,255,0.4); font-size:0.82rem; text-decoration:none;">← Back to Site</a>
+    <div style="display:flex;align-items:center;gap:1.5rem;">
+      <span id="admin-user" style="color:rgba(255,255,255,0.4);font-size:0.8rem;"></span>
+      <a href="/index.html" style="color:rgba(255,255,255,0.4);font-size:0.82rem;text-decoration:none;">← Back to Site</a>
+      <a href="/logout" style="color:#C9983A;font-size:0.82rem;text-decoration:none;">Sign Out</a>
+    </div>
   </div>
 
   <div class="admin-layout">
@@ -204,6 +209,29 @@
   </div>
 
   <script type="module">
+    // Verify user is authenticated via Azure SWA auth
+    async function checkAuth() {
+      try {
+        const res  = await fetch('/.auth/me')
+        const data = await res.json()
+        const user = data.clientPrincipal
+        if (!user) {
+          window.location.href = '/.auth/login/github?post_login_redirect_uri=/admin.html'
+          return false
+        }
+        const roles = user.userRoles || []
+        if (!roles.includes('admin')) {
+          window.location.href = '/unauthorized.html'
+          return false
+        }
+        const nameEl = document.getElementById('admin-user')
+        if (nameEl) nameEl.textContent = user.userDetails || user.userId || ''
+        return true
+      } catch {
+        return true // if /.auth/me fails locally just continue
+      }
+    }
+
     // Sidebar nav
     document.querySelectorAll('.admin-sidebar a[data-panel]').forEach(link => {
       link.addEventListener('click', e => {
@@ -227,7 +255,7 @@
     async function loadDashboard() {
       try {
         const [statsRes, dogsRes] = await Promise.all([
-          fetch('/api/lost-dogs/stats'),
+          fetch('/api/lost-dogs-stats'),
           fetch('/api/lost-dogs?limit=10')
         ])
         const stats = await statsRes.json()
@@ -377,7 +405,7 @@
       return new Date(d).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
     }
 
-    loadDashboard()
+    checkAuth().then(ok => { if (ok) loadDashboard() })
   </script>
 </body>
 </html>

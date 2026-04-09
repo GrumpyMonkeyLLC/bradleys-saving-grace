@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Access Denied — Bradley's Saving Grace</title>
+  <link rel="stylesheet" href="./styles/main.css">
+</head>
+<body>
+  <div id="site-nav"></div>
+
+  <section class="section" style="background:var(--cream); min-height:70vh; display:flex; align-items:center;">
+    <div class="container container--narrow text-center">
+      <div style="font-size:3rem; margin-bottom:1rem;">🔒</div>
+      <h1 style="font-family:'Playfair Display',serif; color:var(--brown-dark); font-size:2rem; margin-bottom:1rem;">
+        Access Denied
+      </h1>
+      <p style="color:var(--text-mid); margin-bottom:2rem; font-size:1rem; line-height:1.8;">
+        You don't have permission to access the admin panel.<br>
+        This area is restricted to authorized administrators only.
+      </p>
+      <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+        <a href="/index.html" class="btn btn--brown">Go Home</a>
+        <a href="/logout" class="btn btn--outline" style="border-color:var(--border);color:var(--text-mid);">Sign Out</a>
+      </div>
+    </div>
+  </section>
+
+  <div id="site-footer"></div>
+
+  <script type="module">
+    import { renderNav, renderFooter } from './components/layout.js'
+    renderNav()
+    renderFooter()
+  </script>
+</body>
+</html>
