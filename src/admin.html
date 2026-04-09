@@ -216,7 +216,7 @@
         const data = await res.json()
         const user = data.clientPrincipal
         if (!user) {
-          window.location.href = '/.auth/login/github?post_login_redirect_uri=/admin.html'
+          window.location.href = '/.auth/login/aad?post_login_redirect_uri=/admin.html'
           return false
         }
         const roles = user.userRoles || []

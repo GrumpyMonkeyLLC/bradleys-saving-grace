@@ -2,35 +2,59 @@
   "routes": [
     {
       "route": "/admin.html",
-      "allowedRoles": ["admin"]
+      "allowedRoles": [
+        "admin"
+      ]
     },
     {
       "route": "/admin",
-      "allowedRoles": ["admin"]
+      "allowedRoles": [
+        "admin"
+      ]
     },
     {
       "route": "/api/lost-dogs*",
-      "methods": ["PUT", "DELETE"],
-      "allowedRoles": ["admin"]
+      "methods": [
+        "PUT",
+        "DELETE"
+      ],
+      "allowedRoles": [
+        "admin"
+      ]
     },
     {
       "route": "/api/contact*",
-      "methods": ["GET", "DELETE"],
-      "allowedRoles": ["admin"]
+      "methods": [
+        "GET",
+        "DELETE"
+      ],
+      "allowedRoles": [
+        "admin"
+      ]
     },
     {
       "route": "/api/subscribe*",
-      "methods": ["GET", "DELETE"],
-      "allowedRoles": ["admin"]
+      "methods": [
+        "GET",
+        "DELETE"
+      ],
+      "allowedRoles": [
+        "admin"
+      ]
     },
     {
       "route": "/api/*",
-      "methods": ["GET", "POST"],
-      "allowedRoles": ["anonymous"]
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "allowedRoles": [
+        "anonymous"
+      ]
     },
     {
       "route": "/login",
-      "rewrite": "/.auth/login/github"
+      "rewrite": "/.auth/login/aad"
     },
     {
       "route": "/logout",
@@ -39,11 +63,16 @@
   ],
   "navigationFallback": {
     "rewrite": "/index.html",
-    "exclude": ["/images/*", "/css/*", "/js/*", "/*.{png,jpg,gif,ico,svg,webp}"]
+    "exclude": [
+      "/images/*",
+      "/css/*",
+      "/js/*",
+      "/*.{png,jpg,gif,ico,svg,webp}"
+    ]
   },
   "responseOverrides": {
     "401": {
-      "redirect": "/.auth/login/github?post_login_redirect_uri=/admin.html",
+      "redirect": "/.auth/login/aad?post_login_redirect_uri=/admin.html",
       "statusCode": 302
     },
     "403": {
