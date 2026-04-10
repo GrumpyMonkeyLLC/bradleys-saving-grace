@@ -39,7 +39,7 @@ export function renderFooter() {
         <a href="/listings.html">Lost Dogs</a>
         <a href="/report.html">Report a Dog</a>
         <a href="/contact.html">Contact</a>
-        <a href="https://www.facebook.com/BradleysSavingGrace" target="_blank">Facebook</a>
+        <a href="https://www.facebook.com/people/Bring-Bradley-Home/61586951067313/" target="_blank">Facebook</a>
       </nav>
       <p>© ${new Date().getFullYear()} Bradley's Saving Grace · All rights reserved</p>
       <p style="margin-top:0.5rem; font-size:0.72rem; opacity:0.4;">
