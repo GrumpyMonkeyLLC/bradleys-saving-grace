@@ -45,6 +45,9 @@ export function renderFooter() {
       <p style="margin-top:0.5rem; font-size:0.72rem; opacity:0.4;">
         Built with love for every dog still waiting to come home.
       </p>
+      <p style="margin-top:0.6rem; font-size:0.7rem; opacity:0.25;">
+        Built by <a href="https://www.packetpointtechnologies.com" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-underline-offset:2px;">Packet Point Technologies LLC</a>
+      </p>
     </footer>
   `
 }
