@@ -104,57 +104,6 @@
       color: var(--text-mid);
     }
 
-    .tiers { background: var(--brown); color: #fff; }
-    .tiers .section-title { color: #fff; }
-    .tiers .eyebrow { color: var(--gold); }
-
-    .tier-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
-      margin-top: 2.5rem;
-    }
-
-    .tier-card {
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: var(--radius);
-      padding: 2rem 1.5rem;
-      text-align: center;
-      transition: background 0.2s;
-    }
-    .tier-card:hover { background: rgba(255,255,255,0.1); }
-    .tier-card--featured {
-      border: 2px solid var(--gold);
-      background: rgba(201,152,58,0.08);
-    }
-
-    .tier-icon { font-size: 2rem; margin-bottom: 1rem; }
-    .tier-name {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.2rem;
-      color: var(--gold-light);
-      margin-bottom: 0.5rem;
-    }
-    .tier-price {
-      font-size: 0.82rem;
-      color: rgba(255,255,255,0.45);
-      margin-bottom: 1.25rem;
-      letter-spacing: 0.05em;
-    }
-    .tier-perks { list-style: none; text-align: left; }
-    .tier-perks li {
-      font-size: 0.85rem;
-      color: rgba(255,255,255,0.65);
-      padding: 0.4rem 0;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-      display: flex;
-      gap: 0.5rem;
-      align-items: flex-start;
-    }
-    .tier-perks li:last-child { border-bottom: none; }
-    .tier-perks li::before { content: '✓'; color: var(--gold); flex-shrink: 0; }
-
     .become-partner { background: var(--cream); }
 
     .partner-form-card {
@@ -176,7 +125,6 @@
 
     @media (max-width: 768px) {
       .featured-partner { grid-template-columns: 1fr; gap: 1.5rem; }
-      .tier-grid { grid-template-columns: 1fr; }
       .partner-logo-box { aspect-ratio: 2/1; }
     }
   </style>
@@ -284,60 +232,6 @@
     </div>
   </section>
 
-  <!-- PARTNERSHIP TIERS -->
-  <section class="section tiers">
-    <div class="container">
-      <div class="text-center">
-        <span class="eyebrow">Partnership Opportunities</span>
-        <h2 class="section-title">Partner <em>With Us</em></h2>
-        <p style="color:rgba(255,255,255,0.5); max-width:520px; margin:0 auto; font-weight:300;">
-          Help fund the mission while getting your brand in front of a passionate community of dog lovers.
-        </p>
-      </div>
-
-      <div class="tier-grid">
-        <div class="tier-card">
-          <div class="tier-icon">🐾</div>
-          <div class="tier-name">Community Partner</div>
-          <div class="tier-price">Contact us for details</div>
-          <ul class="tier-perks">
-            <li>Logo on partners page</li>
-            <li>Link to your website</li>
-            <li>Social media mention</li>
-            <li>Certificate of partnership</li>
-          </ul>
-        </div>
-
-        <div class="tier-card tier-card--featured">
-          <div class="tier-icon">⭐</div>
-          <div class="tier-name">Supporting Partner</div>
-          <div class="tier-price">Contact us for details</div>
-          <ul class="tier-perks">
-            <li>Everything in Community</li>
-            <li>Featured logo placement</li>
-            <li>Co-branded social posts</li>
-            <li>Listed on all alerts</li>
-            <li>Quarterly impact report</li>
-          </ul>
-        </div>
-
-        <div class="tier-card">
-          <div class="tier-icon">🏆</div>
-          <div class="tier-name">Founding Partner</div>
-          <div class="tier-price">Contact us for details</div>
-          <ul class="tier-perks">
-            <li>Everything in Supporting</li>
-            <li>Homepage logo placement</li>
-            <li>Dedicated partner profile</li>
-            <li>Named in press releases</li>
-            <li>Advisory board seat</li>
-            <li>Annual recognition event</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- BECOME A PARTNER FORM -->
   <section class="section become-partner" id="become-a-partner">
     <div class="container">
@@ -345,7 +239,7 @@
         <span class="eyebrow">Get Involved</span>
         <h2 class="section-title">Become a <em>Partner</em></h2>
         <p style="color:var(--text-light); max-width:500px; margin:0 auto; font-weight:300;">
-          Interested in supporting Bradley's Hugs? Tell us about your organization and we'll be in touch.
+          Interested in supporting Bradley's Hugs? Tell us about your organization and how you'd like to get involved. We'll be in touch within 48 hours.
         </p>
       </div>
 
@@ -382,13 +276,13 @@
           </div>
 
           <div class="form-group">
-            <label for="partnerType">Partnership Interest</label>
+            <label for="partnerType">How Would You Like to Partner?</label>
             <select id="partnerType" name="partnerType">
               <option value="">Select type</option>
-              <option>Community Partner</option>
-              <option>Supporting Partner</option>
-              <option>Founding Partner</option>
+              <option>Business Sponsor</option>
               <option>Technology / Services Donation</option>
+              <option>Community Organization</option>
+              <option>Volunteer Services</option>
               <option>Other</option>
             </select>
           </div>
