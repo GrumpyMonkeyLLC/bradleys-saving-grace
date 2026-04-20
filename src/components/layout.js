@@ -5,6 +5,7 @@ export function renderNav(activePage = '') {
     { href: '/index.html',    label: 'Home' },
     { href: '/listings.html', label: 'Lost Dogs' },
     { href: '/report.html',   label: 'Report a Dog' },
+    { href: '/partners.html', label: 'Partners' },
     { href: '/contact.html',  label: 'Contact' },
   ]
 
@@ -39,7 +40,8 @@ export function renderFooter() {
         <a href="/listings.html">Lost Dogs</a>
         <a href="/report.html">Report a Dog</a>
         <a href="/contact.html">Contact</a>
-        <a href="https://www.facebook.com/people/Bring-Bradley-Home/61586951067313/" target="_blank">Facebook</a>
+        <a href="/partners.html">Partners</a>
+        <a href="https://www.facebook.com/profile.php?id=61586951067313" target="_blank">Facebook</a>
       </nav>
       <p>© ${new Date().getFullYear()} Bradley's Saving Grace · All rights reserved</p>
       <p style="margin-top:0.5rem; font-size:0.72rem; opacity:0.4;">
