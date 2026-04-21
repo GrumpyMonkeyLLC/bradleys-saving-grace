@@ -13,6 +13,7 @@ export default defineConfig({
         listings:   'src/listings.html',
         contact:    'src/contact.html',
         admin:      'src/admin.html',
+        partners:   'src/partners.html',
       }
     }
   }

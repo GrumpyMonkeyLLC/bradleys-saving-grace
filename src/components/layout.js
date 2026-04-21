@@ -5,6 +5,7 @@ export function renderNav(activePage = '') {
     { href: '/index.html',    label: 'Home' },
     { href: '/listings.html', label: 'Lost Dogs' },
     { href: '/report.html',   label: 'Report a Dog' },
+    { href: '/partners.html', label: 'Partners' },
     { href: '/contact.html',  label: 'Contact' },
   ]
 
@@ -16,7 +17,7 @@ export function renderNav(activePage = '') {
     <nav class="site-nav">
       <div class="site-nav__inner">
         <a href="/index.html" class="site-nav__logo">
-          Bradley's Saving Grace
+          Bradley's Hugs
           <span>🐾 Nonprofit Organization</span>
         </a>
         <ul class="site-nav__links">
@@ -31,7 +32,7 @@ export function renderNav(activePage = '') {
 export function renderFooter() {
   document.getElementById('site-footer').innerHTML = `
     <footer class="site-footer">
-      <div class="site-footer__logo">Bradley's Saving Grace</div>
+      <div class="site-footer__logo">Bradley's Hugs</div>
       <p>A nonprofit organization in formation · In loving memory of Bradley 🐾</p>
       <div class="site-footer__divider"></div>
       <nav class="site-footer__links">
@@ -39,13 +40,14 @@ export function renderFooter() {
         <a href="/listings.html">Lost Dogs</a>
         <a href="/report.html">Report a Dog</a>
         <a href="/contact.html">Contact</a>
-        <a href="https://www.facebook.com/people/Bring-Bradley-Home/61586951067313/" target="_blank">Facebook</a>
+        <a href="/partners.html">Partners</a>
+        <a href="https://www.facebook.com/profile.php?id=61586951067313" target="_blank">Facebook</a>
       </nav>
-      <p>© ${new Date().getFullYear()} Bradley's Saving Grace · All rights reserved</p>
-      <p style="margin-top:0.5rem; font-size:0.72rem; opacity:0.4;">
+      <p>© ${new Date().getFullYear()} Bradley's Hugs · All rights reserved</p>
+      <p style="margin-top:0.5rem; font-size:0.82rem; opacity:0.4;">
         Built with love for every dog still waiting to come home.
       </p>
-      <p style="margin-top:0.6rem; font-size:0.7rem; opacity:0.25;">
+      <p style="margin-top:0.6rem; font-size:0.82rem; opacity:0.4;">
         Built by <a href="https://www.packetpointtechnologies.com" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-underline-offset:2px;">Packet Point Technologies LLC</a>
       </p>
     </footer>
