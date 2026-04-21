@@ -19,7 +19,7 @@
       border-radius: var(--radius);
       padding: 3rem;
       display: grid;
-      grid-template-columns: 240px 1fr;
+      grid-template-columns: 260px 1fr;
       gap: 3rem;
       align-items: center;
       margin-bottom: 1.5rem;
@@ -28,27 +28,27 @@
     .featured-partner:hover { box-shadow: 0 8px 32px rgba(92,61,30,0.1); }
 
     .partner-logo-box {
-      aspect-ratio: 4/3;
-      border: 1px solid var(--border);
+      aspect-ratio: 1/1;
       border-radius: var(--radius);
       display: flex;
       align-items: center;
       justify-content: center;
-      background: var(--cream);
-      padding: 1.5rem;
+      overflow: hidden;
       text-decoration: none;
+      flex-shrink: 0;
     }
     .partner-logo-box img {
-      max-width: 100%;
-      max-height: 100%;
-      object-fit: contain;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.3s;
     }
-    .partner-logo-placeholder {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.1rem;
-      color: var(--brown);
-      text-align: center;
-      line-height: 1.4;
+    .partner-logo-box:hover img { transform: scale(1.03); }
+
+    .partner-logo-box--contain img {
+      object-fit: contain;
+      padding: 1.25rem;
     }
 
     .partner-badge {
@@ -93,6 +93,7 @@
       display: flex;
       flex-wrap: wrap;
       gap: 0.5rem;
+      margin-bottom: 1.25rem;
     }
 
     .service-tag {
@@ -123,9 +124,19 @@
       border-bottom: 1px solid var(--border);
     }
 
+    .join-placeholder {
+      text-align: center;
+      padding: 2.5rem 2rem;
+      border: 2px dashed var(--border);
+      border-radius: var(--radius);
+      color: var(--text-light);
+      margin-top: 0.5rem;
+    }
+    .join-placeholder p { font-size: 0.9rem; margin-top: 0.5rem; }
+
     @media (max-width: 768px) {
       .featured-partner { grid-template-columns: 1fr; gap: 1.5rem; }
-      .partner-logo-box { aspect-ratio: 2/1; }
+      .partner-logo-box { aspect-ratio: 4/3; width: 100%; }
     }
   </style>
 </head>
@@ -135,49 +146,49 @@
   <div class="page-hero">
     <span class="eyebrow">Together We're Stronger</span>
     <h1>Our <em>Partners</em></h1>
-    <p>The businesses and organizations helping make Bradley's Saving Grace possible.</p>
+    <p>The businesses and organizations helping make Bradley's Hugs possible.</p>
   </div>
 
   <!-- FEATURED PARTNERS -->
   <section class="section partners-intro">
     <div class="container">
       <div class="text-center mb-4">
+        <span class="eyebrow">Our Partners</span>
         <h2 class="section-title">Built &amp; Supported <em>With Love</em></h2>
-        <p style="color:var(--text-light); max-width:520px; margin: 0 auto; font-weight:300;">
-          These organizations contribute their time, expertise, and resources to keep Bradley's Saving Grace running.
+        <p style="color:var(--text-light); max-width:520px; margin:0 auto; font-weight:300;">
+          These organizations contribute their time, expertise, and resources to keep Bradley's Hugs running.
         </p>
       </div>
 
       <!-- PACKET POINT TECHNOLOGIES -->
       <div class="featured-partner">
-        <a href="https://www.packetpointtechnologies.com" target="_blank" rel="noopener" class="partner-logo-box">
-          <img src="/images/ppt.jpg" alt="Packet Point Technologies" class="logo-fit">
-          <div class="partner-logo-placeholder">
-            Packet Point<br>Technologies LLC
-          </div>
+        <a href="https://www.packetpointtechnologies.com" target="_blank" rel="noopener"
+           class="partner-logo-box partner-logo-box--contain" style="background:#0d1f2d;">
+          <img src="/images/ppt.jpg" alt="Packet Point Technologies LLC">
         </a>
         <div>
-          <span class="partner-badge">Technology Partner</span>
+          <span class="partner-badge">Founding Technology Partner</span>
           <div class="partner-name">Packet Point Technologies LLC</div>
           <a href="https://www.packetpointtechnologies.com" target="_blank" rel="noopener" class="partner-url">
             packetpointtechnologies.com
           </a>
           <p class="partner-desc">
-            Packet Point Technologies LLC designed, built, and deployed the Bradley's Hugs website — pro bono, out of a shared belief that technology should serve community.
+            Packet Point Technologies LLC designed, built, and deployed the entire Bradley's Hugs platform — pro bono, out of a shared belief that technology should serve community. From the ground up on Microsoft Azure, they architected the full cloud infrastructure including the lost dog reporting system, photo upload pipeline, admin dashboard, secure Microsoft OAuth authentication, GitHub Actions CI/CD deployment, and server-side security hardening.
           </p>
           <p class="partner-desc">
             Based in Northeast Ohio, Packet Point Technologies specializes in cloud infrastructure, managed IT services, cybersecurity, and full stack web development. Whether you're a small business looking to modernize, a nonprofit needing affordable tech solutions, or an organization ready to move to the cloud — Packet Point delivers enterprise-grade results without the enterprise price tag.
           </p>
           <div class="partner-services">
+            <span class="service-tag">Microsoft Azure</span>
             <span class="service-tag">Cloud Infrastructure</span>
             <span class="service-tag">Full Stack Development</span>
-            <span class="service-tag">Hosting Services</span>
             <span class="service-tag">Managed IT Services</span>
             <span class="service-tag">Cybersecurity</span>
-            <span class="service-tag">CI/CD & DevOps</span>
+            <span class="service-tag">CI/CD &amp; DevOps</span>
             <span class="service-tag">Northeast Ohio</span>
           </div>
-          <a href="https://www.packetpointtechnologies.com" target="_blank" rel="noopener" class="btn btn--brown mt-3" style="display:inline-block;">
+          <a href="https://www.packetpointtechnologies.com" target="_blank" rel="noopener"
+             class="btn btn--brown" style="display:inline-block;">
             Work With Us
           </a>
         </div>
@@ -185,47 +196,60 @@
 
       <!-- RMC RECOVERY -->
       <div class="featured-partner">
-        <a href="https://rmcrecovery.com/" target="_blank" rel="noopener" class="partner-logo-box">
-          <div class="partner-logo-placeholder">RMC<br>Recovery</div>
+        <a href="https://rmcrecovery.com/" target="_blank" rel="noopener"
+           class="partner-logo-box" style="background:#111;">
+          <img src="/images/rmc.jpg" alt="RMC Recovery - Thermal Drone Services">
         </a>
         <div>
-          <span class="partner-badge">Community Partner</span>
+          <span class="partner-badge">Search &amp; Recovery Partner</span>
           <div class="partner-name">RMC Recovery</div>
           <a href="https://rmcrecovery.com/" target="_blank" rel="noopener" class="partner-url">rmcrecovery.com</a>
           <p class="partner-desc">
-            RMC Recovery is a proud community partner of Bradley's Saving Grace, joining the mission to reunite lost and stolen dogs with their families. Their support and commitment to community makes a real difference in the lives of pet owners in crisis.
+            RMC Recovery provides professional thermal drone services for lost pet recovery, deer, livestock, and property inspections across Northeast Ohio. Their thermal imaging technology can detect heat signatures in the dark, through brush, and across large areas — making them an invaluable partner when a dog goes missing and every hour counts.
           </p>
           <div class="partner-services">
-            <span class="service-tag">Community Partner</span>
-            <span class="service-tag">Recovery Services</span>
+            <span class="service-tag">Thermal Drone Services</span>
+            <span class="service-tag">Lost Pet Recovery</span>
+            <span class="service-tag">Deer &amp; Livestock</span>
+            <span class="service-tag">Inspections</span>
           </div>
+          <a href="tel:3309498816" class="btn btn--brown" style="display:inline-block;">
+            Call 330-949-8816
+          </a>
         </div>
       </div>
 
       <!-- S&H DRONE SERVICE -->
       <div class="featured-partner">
-        <a href="https://www.facebook.com/profile.php?id=61550959956559" target="_blank" rel="noopener" class="partner-logo-box">
-          <div class="partner-logo-placeholder">S&amp;H Drone<br>Service</div>
+        <a href="https://www.facebook.com/profile.php?id=61550959956559" target="_blank" rel="noopener"
+           class="partner-logo-box partner-logo-box--contain" style="background:#000;">
+          <img src="/images/SH.jpg" alt="S&amp;H Drone Service">
         </a>
         <div>
-          <span class="partner-badge">Search &amp; Recovery Partner</span>
+          <span class="partner-badge">Aerial Search Partner</span>
           <div class="partner-name">S&amp;H Drone Service</div>
-          <a href="https://www.facebook.com/profile.php?id=61550959956559" target="_blank" rel="noopener" class="partner-url">Find us on Facebook</a>
+          <a href="https://www.facebook.com/profile.php?id=61550959956559" target="_blank" rel="noopener" class="partner-url">
+            Find us on Facebook
+          </a>
           <p class="partner-desc">
-            S&amp;H Drone Service brings cutting-edge aerial search capabilities to Bradley's Saving Grace. When a dog goes missing, drones can cover vast areas quickly — scanning fields, wooded areas, and neighborhoods from above. This technology dramatically increases the chances of a successful recovery, especially in the critical first hours after a dog goes missing.
+            S&amp;H Drone Service brings cutting-edge aerial search capabilities to Bradley's Hugs. When a dog goes missing, drones can cover vast areas quickly — scanning fields, wooded areas, and neighborhoods from above. This technology dramatically increases the chances of a successful recovery, especially in the critical first hours after a dog goes missing.
           </p>
           <div class="partner-services">
             <span class="service-tag">Aerial Search</span>
             <span class="service-tag">Drone Recovery</span>
             <span class="service-tag">Search &amp; Rescue Support</span>
           </div>
+          <a href="https://www.facebook.com/profile.php?id=61550959956559" target="_blank" rel="noopener"
+             class="btn btn--brown" style="display:inline-block;">
+            Find on Facebook
+          </a>
         </div>
       </div>
 
-      <!-- BECOME A PARTNER PLACEHOLDER -->
-      <div style="text-align:center; padding: 2rem; border: 2px dashed var(--border); border-radius: var(--radius); color: var(--text-light);">
-        <div style="font-size:1.5rem; margin-bottom:0.5rem;">🤝</div>
-        <p style="font-size:0.9rem;">Your organization could be featured here. <a href="#become-a-partner" style="color:var(--gold);">Learn about partnerships →</a></p>
+      <!-- JOIN PLACEHOLDER -->
+      <div class="join-placeholder">
+        <div style="font-size:1.5rem;">🤝</div>
+        <p>Your organization could be featured here. <a href="#become-a-partner" style="color:var(--gold);">Learn about partnerships →</a></p>
       </div>
     </div>
   </section>
@@ -288,7 +312,7 @@
           <div class="form-group">
             <label for="message">Tell Us About Your Organization *</label>
             <textarea id="message" name="message" rows="5" required
-              placeholder="What does your organization do? Why do you want to partner with Bradley's Saving Grace?"></textarea>
+              placeholder="What does your organization do? Why do you want to partner with Bradley's Hugs?"></textarea>
           </div>
 
           <button type="submit" class="btn btn--gold btn--full" id="partner-btn" style="font-size:1rem; padding:1rem;">
