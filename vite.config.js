@@ -8,12 +8,14 @@ export default defineConfig({
     emptyOutDir: true,
     rollupOptions: {
       input: {
-        main:       'src/index.html',
-        report:     'src/report.html',
-        listings:   'src/listings.html',
-        contact:    'src/contact.html',
-        admin:      'src/admin.html',
-        partners:   'src/partners.html',
+        main:         'src/index.html',
+        report:       'src/report.html',
+        listings:     'src/listings.html',
+        contact:      'src/contact.html',
+        admin:        'src/admin.html',
+        partners:     'src/partners.html',
+        donate:       'src/donate.html',
+        unauthorized: 'src/unauthorized.html',
       }
     }
   }
