@@ -21,6 +21,7 @@ export function renderNav(activePage = '') {
         <ul class="site-nav__links" id="nav-links">
           ${navLinks}
           <li><a href="/report.html" class="nav-cta">Report Lost Dog</a></li>
+          <li><a href="/admin.html" style="color:rgba(255,255,255,0.3);font-size:0.75rem;letter-spacing:0.05em;">⚙ Admin</a></li>
         </ul>
         <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu">
           <span></span><span></span><span></span>
@@ -30,6 +31,7 @@ export function renderNav(activePage = '') {
         <ul>
           ${navLinks}
           <li><a href="/report.html" class="nav-cta-mobile">Report Lost Dog</a></li>
+          <li><a href="/admin.html" style="color:rgba(255,255,255,0.3);font-size:0.85rem;">⚙ Admin Panel</a></li>
         </ul>
       </div>
     </nav>
@@ -64,6 +66,7 @@ export function renderFooter() {
         <a href="/report.html">Report a Dog</a>
         <a href="/contact.html">Contact</a>
         <a href="/partners.html">Partners</a>
+        <a href="/admin.html">Admin</a>
         <a href="https://www.facebook.com/profile.php?id=61586951067313" target="_blank">Facebook</a>
       </nav>
       <p>© ${new Date().getFullYear()} Bradley's Hugs · All rights reserved</p>

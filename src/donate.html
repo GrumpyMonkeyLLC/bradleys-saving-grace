@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Donate — Bradley's Hugs</title>
+  <link rel="icon" href="/images/favicon.png" type="image/png">
+  <link rel="stylesheet" href="./styles/main.css">
+  <style>
+    .page-hero { background: var(--brown-dark); padding: 4rem 2rem 3rem; text-align: center; }
+    .page-hero h1 { color: #fff; font-size: clamp(2rem, 5vw, 3rem); }
+    .page-hero p { color: rgba(255,255,255,0.5); margin-top: 0.75rem; max-width: 560px; margin-left: auto; margin-right: auto; }
+
+    .impact { background: var(--warm-white); border-top: 4px solid var(--gold); }
+
+    .impact-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem;
+      margin-top: 2.5rem;
+    }
+
+    .impact-card {
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+      display: flex;
+      gap: 1.25rem;
+      align-items: flex-start;
+      transition: box-shadow 0.2s;
+    }
+    .impact-card:hover { box-shadow: 0 4px 20px rgba(92,61,30,0.08); }
+    .impact-card__icon { font-size: 2rem; flex-shrink: 0; margin-top: 2px; }
+    .impact-card h3 { font-family: 'Playfair Display', serif; font-size: 1.05rem; color: var(--brown-dark); margin-bottom: 0.4rem; }
+    .impact-card p { font-size: 0.88rem; color: var(--text-mid); line-height: 1.7; font-weight: 300; }
+
+    .donate-section { background: var(--cream); }
+
+    .donate-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 2.5rem;
+    }
+
+    .donate-card {
+      background: var(--warm-white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .donate-card:hover { box-shadow: 0 8px 32px rgba(92,61,30,0.1); transform: translateY(-2px); }
+    .donate-card__header { padding: 1.5rem; text-align: center; border-bottom: 1px solid var(--border); }
+    .donate-card__icon { font-size: 2.5rem; margin-bottom: 0.5rem; }
+    .donate-card__title { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--brown-dark); margin-bottom: 0.25rem; }
+    .donate-card__handle { font-size: 0.88rem; color: var(--gold); font-weight: 500; letter-spacing: 0.05em; }
+    .donate-card__body { padding: 1.5rem; text-align: center; }
+    .donate-card__body p { font-size: 0.88rem; color: var(--text-mid); line-height: 1.7; margin-bottom: 1.25rem; }
+
+    .check-card {
+      background: var(--warm-white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      grid-column: 1 / -1;
+    }
+    .check-card h3 { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--brown-dark); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.75rem; }
+    .check-card__address {
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      color: var(--brown-dark);
+      line-height: 1.8;
+      margin-bottom: 1rem;
+    }
+    .check-card p { font-size: 0.88rem; color: var(--text-mid); line-height: 1.7; }
+
+    .tax-banner { background: var(--brown); color: #fff; padding: 2.5rem 2rem; text-align: center; }
+    .tax-banner__icon { font-size: 2rem; margin-bottom: 0.75rem; }
+    .tax-banner h3 { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--gold-light); margin-bottom: 0.75rem; }
+    .tax-banner p { font-size: 0.92rem; color: rgba(255,255,255,0.7); max-width: 560px; margin: 0 auto; line-height: 1.8; }
+
+    @media (max-width: 768px) {
+      .impact-grid { grid-template-columns: 1fr; }
+      .donate-grid { grid-template-columns: 1fr; }
+      .check-card { grid-column: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div id="site-nav"></div>
+
+  <div class="page-hero">
+    <span class="eyebrow">Make a Difference</span>
+    <h1>Support <em>Bradley's Hugs</em></h1>
+    <p>Your donation directly funds the search, recovery, and reunion of lost and stolen dogs with their families.</p>
+  </div>
+
+  <!-- IMPACT -->
+  <section class="section impact">
+    <div class="container">
+      <div class="text-center mb-2">
+        <span class="eyebrow">Where Your Money Goes</span>
+        <h2 class="section-title">Your Support <em>Makes This Possible</em></h2>
+        <p style="color:var(--text-light); max-width:520px; margin:0 auto; font-weight:300;">
+          Every dollar goes directly toward reuniting dogs with their families. Here's how your financial support helps:
+        </p>
+      </div>
+      <div class="impact-grid">
+        <div class="impact-card">
+          <div class="impact-card__icon">🚁</div>
+          <div>
+            <h3>Drone Search Operations</h3>
+            <p>Funding our sponsored thermal drone operators who can cover vast search areas quickly — day or night — dramatically increasing the chances of a successful recovery.</p>
+          </div>
+        </div>
+        <div class="impact-card">
+          <div class="impact-card__icon">🪤</div>
+          <div>
+            <h3>Trapping &amp; Recovery Experts</h3>
+            <p>Supporting professional trapping and recovery specialists who have the skills and equipment to safely capture frightened or injured dogs who won't come when called.</p>
+          </div>
+        </div>
+        <div class="impact-card">
+          <div class="impact-card__icon">📋</div>
+          <div>
+            <h3>Flyers, Signs &amp; Printing</h3>
+            <p>Covering the cost of printed flyers, yard signs, and banners that blanket the search area with your dog's photo and information — because visibility saves lives.</p>
+          </div>
+        </div>
+        <div class="impact-card">
+          <div class="impact-card__icon">🤝</div>
+          <div>
+            <h3>Community Resources</h3>
+            <p>Purchasing equipment, supplies, and resources needed to connect lost and stolen pets with their owners across our community and beyond.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DONATE -->
+  <section class="section donate-section">
+    <div class="container">
+      <div class="text-center mb-2">
+        <span class="eyebrow">Give Today</span>
+        <h2 class="section-title">Choose a <em>Payment Method</em></h2>
+      </div>
+
+      <div class="donate-grid">
+
+        <!-- VENMO -->
+        <div class="donate-card">
+          <div class="donate-card__header">
+            <div class="donate-card__icon">💜</div>
+            <div class="donate-card__title">Venmo</div>
+            <div class="donate-card__handle">@bradleyshugs</div>
+          </div>
+          <div class="donate-card__body">
+            <p>Quick and easy mobile payments. Search @bradleyshugs in the Venmo app to send your donation.</p>
+            <a href="https://venmo.com/bradleyshugs" target="_blank" rel="noopener" class="btn btn--brown">
+              Open Venmo
+            </a>
+          </div>
+        </div>
+
+        <!-- CASH APP -->
+        <div class="donate-card">
+          <div class="donate-card__header">
+            <div class="donate-card__icon">💚</div>
+            <div class="donate-card__title">Cash App</div>
+            <div class="donate-card__handle">$bradleyshugs</div>
+          </div>
+          <div class="donate-card__body">
+            <p>Send your donation directly through Cash App. Search $bradleyshugs or tap the button below.</p>
+            <a href="https://cash.app/$bradleyshugs" target="_blank" rel="noopener" class="btn btn--brown">
+              Open Cash App
+            </a>
+          </div>
+        </div>
+
+        <!-- CHECK -->
+        <div class="check-card">
+          <h3>✉️ Mail a Check</h3>
+          <div class="check-card__address">
+            Bradley's Hugs<br>
+            2424 Reimer Rd.<br>
+            Wadsworth, OH 44281
+          </div>
+          <p>Please make checks payable to <strong>Bradley's Hugs</strong>. Receipts are available upon request for your records.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- TAX BANNER -->
+  <div class="tax-banner">
+    <div class="tax-banner__icon">📄</div>
+    <h3>501(c)(3) Tax-Exempt Organization</h3>
+    <p>Bradley's Hugs is a registered 501(c)(3) tax-exempt organization. All donations are tax-deductible to the fullest extent permitted by law. Receipts are available upon request.</p>
+  </div>
+
+  <div id="site-footer"></div>
+
+  <script type="module">
+    import { renderNav, renderFooter } from './components/layout.js'
+    renderNav('Donate')
+    renderFooter()
+  </script>
+</body>
+</html>
