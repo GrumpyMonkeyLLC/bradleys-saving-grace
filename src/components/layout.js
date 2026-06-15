@@ -22,7 +22,6 @@ export function renderNav(activePage = '') {
         <ul class="site-nav__links" id="nav-links">
           ${navLinks}
           <li><a href="/report.html" class="nav-cta">Report Lost Dog</a></li>
-          <li><a href="/admin.html" style="color:rgba(255,255,255,0.3);font-size:0.75rem;letter-spacing:0.05em;">⚙ Admin</a></li>
         </ul>
         <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu">
           <span></span><span></span><span></span>
