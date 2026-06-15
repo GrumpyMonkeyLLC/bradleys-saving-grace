@@ -5,6 +5,7 @@ export function renderNav(activePage = '') {
     { href: '/listings.html', label: 'Lost Dogs' },
     { href: '/report.html',   label: 'Report a Dog' },
     { href: '/partners.html', label: 'Partners' },
+    { href: '/donate.html',   label: 'Donate' },
     { href: '/contact.html',  label: 'Contact' },
   ]
   const navLinks = links.map(l =>
@@ -30,12 +31,13 @@ export function renderNav(activePage = '') {
         <ul>
           ${navLinks}
           <li><a href="/report.html" class="nav-cta-mobile">Report Lost Dog</a></li>
+          <li><a href="/admin.html" style="color:rgba(255,255,255,0.3);font-size:0.85rem;">⚙ Admin Panel</a></li>
         </ul>
       </div>
     </nav>
   `
 
-  // Wire up hamburger AFTER innerHTML is set — scripts in innerHTML don't execute
+  // Wire up hamburger AFTER innerHTML is set
   const hamburger = document.getElementById('nav-hamburger')
   const mobileMenu = document.getElementById('nav-mobile-menu')
 
@@ -62,8 +64,10 @@ export function renderFooter() {
         <a href="/index.html">Home</a>
         <a href="/listings.html">Lost Dogs</a>
         <a href="/report.html">Report a Dog</a>
+        <a href="/donate.html">Donate</a>
         <a href="/contact.html">Contact</a>
         <a href="/partners.html">Partners</a>
+        <a href="/admin.html">Admin</a>
         <a href="https://www.facebook.com/profile.php?id=61586951067313" target="_blank">Facebook</a>
       </nav>
       <p>© ${new Date().getFullYear()} Bradley's Hugs · All rights reserved</p>

@@ -45,10 +45,15 @@
       transition: transform 0.3s;
     }
     .partner-logo-box:hover img { transform: scale(1.03); }
+    .partner-logo-box--contain img { object-fit: contain; padding: 1.25rem; }
 
-    .partner-logo-box--contain img {
-      object-fit: contain;
-      padding: 1.25rem;
+    .partner-logo-placeholder {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.7);
+      text-align: center;
+      line-height: 1.5;
+      padding: 1rem;
     }
 
     .partner-badge {
@@ -64,74 +69,18 @@
       margin-bottom: 0.75rem;
     }
 
-    .partner-name {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.6rem;
-      color: var(--brown-dark);
-      margin-bottom: 0.4rem;
-    }
-
-    .partner-url {
-      font-size: 0.82rem;
-      color: var(--gold);
-      text-decoration: none;
-      letter-spacing: 0.05em;
-      display: inline-block;
-      margin-bottom: 1rem;
-    }
+    .partner-name { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--brown-dark); margin-bottom: 0.4rem; }
+    .partner-url { font-size: 0.82rem; color: var(--gold); text-decoration: none; letter-spacing: 0.05em; display: inline-block; margin-bottom: 1rem; }
     .partner-url:hover { text-decoration: underline; }
-
-    .partner-desc {
-      font-size: 0.95rem;
-      color: var(--text-mid);
-      line-height: 1.85;
-      font-weight: 300;
-      margin-bottom: 1.25rem;
-    }
-
-    .partner-services {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-bottom: 1.25rem;
-    }
-
-    .service-tag {
-      background: var(--cream);
-      border: 1px solid var(--border);
-      border-radius: 50px;
-      padding: 4px 14px;
-      font-size: 0.78rem;
-      color: var(--text-mid);
-    }
+    .partner-desc { font-size: 0.95rem; color: var(--text-mid); line-height: 1.85; font-weight: 300; margin-bottom: 1.25rem; }
+    .partner-services { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.25rem; }
+    .service-tag { background: var(--cream); border: 1px solid var(--border); border-radius: 50px; padding: 4px 14px; font-size: 0.78rem; color: var(--text-mid); }
 
     .become-partner { background: var(--cream); }
+    .partner-form-card { background: var(--warm-white); border: 1px solid var(--border); border-radius: var(--radius); padding: 2.5rem; max-width: 680px; margin: 0 auto; }
+    .partner-form-card h2 { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--brown-dark); margin-bottom: 1.75rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
 
-    .partner-form-card {
-      background: var(--warm-white);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 2.5rem;
-      max-width: 680px;
-      margin: 0 auto;
-    }
-    .partner-form-card h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.4rem;
-      color: var(--brown-dark);
-      margin-bottom: 1.75rem;
-      padding-bottom: 1rem;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .join-placeholder {
-      text-align: center;
-      padding: 2.5rem 2rem;
-      border: 2px dashed var(--border);
-      border-radius: var(--radius);
-      color: var(--text-light);
-      margin-top: 0.5rem;
-    }
+    .join-placeholder { text-align: center; padding: 2.5rem 2rem; border: 2px dashed var(--border); border-radius: var(--radius); color: var(--text-light); margin-top: 0.5rem; }
     .join-placeholder p { font-size: 0.9rem; margin-top: 0.5rem; }
 
     @media (max-width: 768px) {
@@ -149,7 +98,6 @@
     <p>The businesses and organizations helping make Bradley's Hugs possible.</p>
   </div>
 
-  <!-- FEATURED PARTNERS -->
   <section class="section partners-intro">
     <div class="container">
       <div class="text-center mb-4">
@@ -163,21 +111,15 @@
       <!-- PACKET POINT TECHNOLOGIES -->
       <div class="featured-partner">
         <a href="https://www.packetpointtechnologies.com" target="_blank" rel="noopener"
-           class="partner-logo-box partner-logo-box--contain" style="background:#0d1f2d;">
+           class="partner-logo-box" style="background:#0d1f2d;">
           <img src="/images/ppt.jpg" alt="Packet Point Technologies LLC">
         </a>
         <div>
           <span class="partner-badge">Founding Technology Partner</span>
           <div class="partner-name">Packet Point Technologies LLC</div>
-          <a href="https://www.packetpointtechnologies.com" target="_blank" rel="noopener" class="partner-url">
-            packetpointtechnologies.com
-          </a>
-          <p class="partner-desc">
-            Packet Point Technologies LLC designed, built, and deployed the entire Bradley's Hugs web platform, out of a shared belief that technology should serve community.
-          </p>
-          <p class="partner-desc">
-            Based in Northeast Ohio, Packet Point Technologies specializes in cloud infrastructure, managed IT services, cybersecurity, and full stack web development. Whether you're a small business looking to modernize, a nonprofit needing affordable tech solutions, or an organization ready to move to the cloud — Packet Point delivers enterprise-grade results without the enterprise price tag.
-          </p>
+          <a href="https://www.packetpointtechnologies.com" target="_blank" rel="noopener" class="partner-url">packetpointtechnologies.com</a>
+          <p class="partner-desc">Packet Point Technologies LLC designed, built, and deployed the entire Bradley's Hugs web platform, out of a shared belief that technology should serve community.</p>
+          <p class="partner-desc">Based in Northeast Ohio, Packet Point Technologies specializes in cloud infrastructure, managed IT services, cybersecurity, and full stack web development. Whether you're a small business looking to modernize, a nonprofit needing affordable tech solutions, or an organization ready to move to the cloud — Packet Point delivers enterprise-grade results without the enterprise price tag.</p>
           <div class="partner-services">
             <span class="service-tag">Microsoft Azure</span>
             <span class="service-tag">Cloud Infrastructure</span>
@@ -187,10 +129,7 @@
             <span class="service-tag">CI/CD &amp; DevOps</span>
             <span class="service-tag">Northeast Ohio</span>
           </div>
-          <a href="https://www.packetpointtechnologies.com" target="_blank" rel="noopener"
-             class="btn btn--brown" style="display:inline-block;">
-            Work With Us
-          </a>
+          <a href="https://www.packetpointtechnologies.com" target="_blank" rel="noopener" class="btn btn--brown" style="display:inline-block;">Work With Us</a>
         </div>
       </div>
 
@@ -204,19 +143,14 @@
           <span class="partner-badge">Search &amp; Recovery Partner</span>
           <div class="partner-name">RMC Recovery</div>
           <a href="https://rmcrecovery.com/" target="_blank" rel="noopener" class="partner-url">rmcrecovery.com</a>
-          <p class="partner-desc">
-            RMC Recovery provides professional thermal drone services for lost pet recovery, deer, livestock, and property inspections across Northeast Ohio. Their thermal imaging technology can detect heat signatures in the dark, through brush, and across large areas — making them an invaluable partner when a dog goes missing and every hour counts.
-          </p>
+          <p class="partner-desc">RMC Recovery provides professional thermal drone services for lost pet recovery, deer, livestock, and property inspections across Northeast Ohio. Their thermal imaging technology can detect heat signatures in the dark, through brush, and across large areas — making them an invaluable partner when a dog goes missing and every hour counts.</p>
           <div class="partner-services">
             <span class="service-tag">Thermal Drone Services</span>
             <span class="service-tag">Lost Pet Recovery</span>
             <span class="service-tag">Deer &amp; Livestock</span>
             <span class="service-tag">Inspections</span>
           </div>
-          <a href="https://rmcrecovery.com" target="_blank" rel="noopener"
-             class="btn btn--brown" style="display:inline-block;">
-            Work With Us
-          </a>
+          <a href="https://rmcrecovery.com" target="_blank" rel="noopener" class="btn btn--brown" style="display:inline-block;">Work With Us</a>
         </div>
       </div>
 
@@ -229,21 +163,32 @@
         <div>
           <span class="partner-badge">Aerial Search Partner</span>
           <div class="partner-name">S&amp;H Drone Service</div>
-          <a href="https://www.facebook.com/profile.php?id=61550959956559" target="_blank" rel="noopener" class="partner-url">
-            Find us on Facebook
-          </a>
-          <p class="partner-desc">
-            S&amp;H Drone Service brings cutting-edge aerial search capabilities to Bradley's Hugs. When a dog goes missing, drones can cover vast areas quickly — scanning fields, wooded areas, and neighborhoods from above. This technology dramatically increases the chances of a successful recovery, especially in the critical first hours after a dog goes missing.
-          </p>
+          <a href="https://www.facebook.com/profile.php?id=61550959956559" target="_blank" rel="noopener" class="partner-url">Find us on Facebook</a>
+          <p class="partner-desc">S&amp;H Drone Service brings cutting-edge aerial search capabilities to Bradley's Hugs. When a dog goes missing, drones can cover vast areas quickly — scanning fields, wooded areas, and neighborhoods from above. This technology dramatically increases the chances of a successful recovery, especially in the critical first hours after a dog goes missing.</p>
           <div class="partner-services">
             <span class="service-tag">Aerial Search</span>
             <span class="service-tag">Drone Recovery</span>
             <span class="service-tag">Search &amp; Rescue Support</span>
           </div>
-          <a href="https://www.facebook.com/profile.php?id=61550959956559" target="_blank" rel="noopener"
-             class="btn btn--brown" style="display:inline-block;">
-            Find on Facebook
-          </a>
+          <a href="https://www.facebook.com/profile.php?id=61550959956559" target="_blank" rel="noopener" class="btn btn--brown" style="display:inline-block;">Find on Facebook</a>
+        </div>
+      </div>
+
+      <!-- AERIAL PRECISION SOLUTIONS -->
+      <div class="featured-partner">
+        <a href="#" class="partner-logo-box" style="background:#1a2a3a;">
+          <!-- SWAP: add logo when available → <img src="/images/aerial-precision.jpg" alt="Aerial Precision Solutions"> -->
+          <div class="partner-logo-placeholder">Aerial Precision<br>Solutions</div>
+        </a>
+        <div>
+          <span class="partner-badge">Aerial Search Partner</span>
+          <div class="partner-name">Aerial Precision Solutions</div>
+          <p class="partner-desc">Aerial Precision Solutions is a proud partner of Bradley's Hugs, bringing professional aerial search and recovery capabilities to our mission of reuniting lost and stolen dogs with their families across Northeast Ohio and beyond.</p>
+          <div class="partner-services">
+            <span class="service-tag">Aerial Search</span>
+            <span class="service-tag">Drone Services</span>
+            <span class="service-tag">Lost Pet Recovery</span>
+          </div>
         </div>
       </div>
 
@@ -281,7 +226,6 @@
               <input type="text" id="contactName" name="contactName" required>
             </div>
           </div>
-
           <div class="form-grid">
             <div class="form-group">
               <label for="email">Email *</label>
@@ -292,12 +236,10 @@
               <input type="tel" id="phone" name="phone" placeholder="(555) 555-5555">
             </div>
           </div>
-
           <div class="form-group">
             <label for="website">Website</label>
             <input type="url" id="website" name="website" placeholder="https://yourwebsite.com">
           </div>
-
           <div class="form-group">
             <label for="partnerType">How Would You Like to Partner?</label>
             <select id="partnerType" name="partnerType">
@@ -309,13 +251,11 @@
               <option>Other</option>
             </select>
           </div>
-
           <div class="form-group">
             <label for="message">Tell Us About Your Organization *</label>
             <textarea id="message" name="message" rows="5" required
               placeholder="What does your organization do? Why do you want to partner with Bradley's Hugs?"></textarea>
           </div>
-
           <button type="submit" class="btn btn--gold btn--full" id="partner-btn" style="font-size:1rem; padding:1rem;">
             Send Partnership Inquiry 🐾
           </button>
@@ -339,13 +279,12 @@
 
     document.getElementById('partner-form').addEventListener('submit', async e => {
       e.preventDefault()
-      const btn     = document.getElementById('partner-btn')
+      const btn = document.getElementById('partner-btn')
       const alertEl = document.getElementById('partner-alert')
-      btn.disabled  = true
+      btn.disabled = true
       btn.textContent = 'Sending…'
       alertEl.innerHTML = ''
-
-      const form    = e.target
+      const form = e.target
       const payload = {
         name:    `${form.contactName.value} (${form.orgName.value})`,
         email:   form.email.value,
@@ -353,19 +292,14 @@
         phone:   form.phone.value,
         message: `Organization: ${form.orgName.value}\nWebsite: ${form.website.value}\nPartnership type: ${form.partnerType.value}\n\n${form.message.value}`,
       }
-
       try {
-        const res  = await fetch('/api/contact', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        })
+        const res = await fetch('/api/contact', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
         const data = await res.json()
         if (res.ok) {
           document.getElementById('partner-form').style.display = 'none'
           document.getElementById('partner-success').style.display = 'block'
         } else {
-          alertEl.innerHTML = `<div class="alert alert--error">${data.error || 'Submission failed. Please try again.'}</div>`
+          alertEl.innerHTML = `<div class="alert alert--error">${data.error || 'Submission failed.'}</div>`
           btn.disabled = false
           btn.textContent = 'Send Partnership Inquiry 🐾'
         }
