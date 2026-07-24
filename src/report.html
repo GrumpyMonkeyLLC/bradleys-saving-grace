@@ -54,11 +54,27 @@
       user-select: none;
     }
     .photo-upload:hover { border-color: var(--gold); background: rgba(201,152,58,0.04); }
+    .photo-upload input[type="file"] { display: none; }
     .photo-upload__icon { font-size: 2.5rem; margin-bottom: 0.5rem; opacity: 0.5; }
     .photo-upload__text { font-size: 0.88rem; color: var(--text-light); line-height: 1.5; }
     .photo-upload__preview { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; justify-content: center; }
     .photo-upload__preview img { width: 80px; height: 80px; object-fit: cover; border-radius: 4px; }
+
     .upload-status { font-size: 0.85rem; color: var(--text-mid); text-align: center; margin-bottom: 0.5rem; min-height: 1.2em; }
+
+    .flyer-checkbox {
+      background: rgba(201,152,58,0.06);
+      border: 1px solid rgba(201,152,58,0.2);
+      border-radius: var(--radius);
+      padding: 1rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      cursor: pointer;
+      margin-top: 1rem;
+    }
+    .flyer-checkbox strong { display: block; font-size: 0.88rem; color: var(--brown-dark); margin-bottom: 0.2rem; }
+    .flyer-checkbox span { font-size: 0.82rem; color: var(--text-mid); font-weight: 300; line-height: 1.5; }
 
     .sidebar-card {
       background: var(--warm-white);
@@ -77,6 +93,18 @@
     .urgent-card h3 { color: #c0392b; font-family: 'Playfair Display', serif; font-size: 1rem; margin-bottom: 0.5rem; }
     .urgent-card p { font-size: 0.85rem; color: #a93226; line-height: 1.65; }
 
+    .success-card { text-align: center; padding: 2.5rem; }
+    .success-card h2 { border: none; padding: 0; margin-bottom: 0.75rem; }
+
+    .flyer-download-section {
+      background: rgba(201,152,58,0.08);
+      border: 1px solid rgba(201,152,58,0.25);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin: 1.25rem 0;
+    }
+    .flyer-download-section p { font-size: 0.88rem; color: var(--text-mid); margin-bottom: 1rem; }
+
     @media (max-width: 900px) { .report-layout { grid-template-columns: 1fr; } }
   </style>
 </head>
@@ -94,6 +122,7 @@
       <div class="report-layout">
 
         <div>
+          <!-- FORM -->
           <div class="form-card" id="report-form-wrap">
             <h2>🐾 Lost Dog Report</h2>
             <div id="form-alert"></div>
@@ -223,27 +252,52 @@
                 <label style="display:flex;align-items:flex-start;gap:.75rem;cursor:pointer;">
                   <input type="checkbox" id="consent" name="consent" required style="width:auto;margin-top:3px;">
                   <span style="font-size:0.85rem;color:var(--text-mid);font-weight:300;">
-                    I consent to Bradley's Saving Grace posting this information publicly to help find my dog. I confirm the information is accurate to the best of my knowledge.
+                    I consent to Bradley's Hugs posting this information publicly to help find my dog. I confirm the information is accurate to the best of my knowledge.
                   </span>
                 </label>
               </div>
 
+              <label class="flyer-checkbox">
+                <input type="checkbox" id="generateFlyer" style="width:auto;margin-top:3px;flex-shrink:0;">
+                <span>
+                  <strong>📄 Generate a printable flyer</strong>
+                  We'll create a ready-to-print PDF flyer with your dog's info and photo. Download it from the confirmation screen to post around your neighborhood.
+                </span>
+              </label>
+
               <div class="upload-status" id="upload-status"></div>
 
-              <button type="submit" class="btn btn--gold btn--full" id="submit-btn" style="font-size:1rem;padding:1rem;">
+              <button type="submit" class="btn btn--gold btn--full mt-3" id="submit-btn" style="font-size:1rem;padding:1rem;">
                 Submit Report 🐾
               </button>
             </form>
           </div>
 
-          <div id="success-state" style="display:none;" class="form-card text-center">
+          <!-- SUCCESS STATE -->
+          <div id="success-state" style="display:none;" class="form-card success-card">
             <div style="font-size:3rem;margin-bottom:1rem;">🐾</div>
-            <h2 style="border:none;padding:0;">Report Submitted!</h2>
-            <p style="color:var(--text-mid);margin:1rem 0 1.5rem;">Your report has been received. We'll post it to our network immediately.</p>
-            <a href="./listings.html" class="btn btn--brown">View All Lost Dogs</a>
+            <h2>Report Submitted!</h2>
+            <p style="color:var(--text-mid);margin-bottom:1.25rem;">Your report has been received. We'll post it to our network immediately.</p>
+
+            <div id="flyer-section" style="display:none;">
+              <div class="flyer-download-section">
+                <p id="flyer-loading-text">⏳ Generating your printable flyer…</p>
+                <a id="flyer-download-btn" href="#" target="_blank" rel="noopener"
+                   class="btn btn--gold" style="display:none;">
+                  📄 Download Printable Flyer
+                </a>
+                <p id="flyer-error-text" style="display:none;color:#c0392b;font-size:0.85rem;"></p>
+              </div>
+              <p style="font-size:0.78rem;color:var(--text-light);">
+                Your flyer is letter-size (8.5×11") and ready to print at home or at your local print shop.
+              </p>
+            </div>
+
+            <a href="./listings.html" class="btn btn--brown mt-2">View All Lost Dogs</a>
           </div>
         </div>
 
+        <!-- SIDEBAR -->
         <div>
           <div class="urgent-card">
             <h3>⚠️ Dog Stolen? Act Fast</h3>
@@ -311,16 +365,9 @@
           URL.revokeObjectURL(url)
           const canvas = document.createElement('canvas')
           let w = img.naturalWidth, h = img.naturalHeight
-          // Scale down only if longest side exceeds maxLong — preserves full aspect ratio
-          if (w > h && w > maxLong) {
-            h = Math.round(h * maxLong / w)
-            w = maxLong
-          } else if (h >= w && h > maxLong) {
-            w = Math.round(w * maxLong / h)
-            h = maxLong
-          }
-          canvas.width = w
-          canvas.height = h
+          if (w > h && w > maxLong)      { h = Math.round(h * maxLong / w); w = maxLong }
+          else if (h >= w && h > maxLong) { w = Math.round(w * maxLong / h); h = maxLong }
+          canvas.width = w; canvas.height = h
           const ctx = canvas.getContext('2d')
           ctx.imageSmoothingEnabled = true
           ctx.imageSmoothingQuality = 'high'
@@ -342,11 +389,42 @@
       statusDiv.textContent = `Uploading photo (${kb}KB)…`
       const fd = new FormData()
       fd.append('photo', compressed, 'photo.jpg')
-      const res = await fetch('/api/upload-photo', { method: 'POST', body: fd })
+      const res  = await fetch('/api/upload-photo', { method: 'POST', body: fd })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Upload failed')
       statusDiv.textContent = 'Photo uploaded ✓'
       return data.url
+    }
+
+    async function generateFlyer(payload, dogId) {
+      const flyerSection  = document.getElementById('flyer-section')
+      const flyerLoading  = document.getElementById('flyer-loading-text')
+      const flyerBtn      = document.getElementById('flyer-download-btn')
+      const flyerError    = document.getElementById('flyer-error-text')
+
+      flyerSection.style.display = 'block'
+
+      try {
+        const res  = await fetch('/api/generate-flyer', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ ...payload, name: payload.dogName, dogId })
+        })
+        const data = await res.json()
+        if (res.ok && data.flyerUrl) {
+          flyerLoading.style.display = 'none'
+          flyerBtn.href = data.flyerUrl
+          flyerBtn.style.display = 'inline-block'
+        } else {
+          flyerLoading.style.display = 'none'
+          flyerError.style.display = 'block'
+          flyerError.textContent = 'Could not generate flyer. Your report was still saved.'
+        }
+      } catch {
+        flyerLoading.style.display = 'none'
+        flyerError.style.display = 'block'
+        flyerError.textContent = 'Flyer generation failed. Your report was still saved.'
+      }
     }
 
     document.getElementById('report-form').addEventListener('submit', async e => {
@@ -359,6 +437,7 @@
 
       const formData = new FormData(e.target)
       const files    = Array.from(photosInput.files).slice(0, 1)
+      const wantsFlyer = document.getElementById('generateFlyer').checked
 
       let photoUrl = ''
       if (files.length > 0) {
@@ -396,16 +475,22 @@
       }
 
       try {
-        const res = await fetch('/api/lost-dogs', {
+        const res  = await fetch('/api/lost-dogs', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
         })
         const data = await res.json()
+
         if (res.ok) {
           document.getElementById('report-form-wrap').style.display = 'none'
           document.getElementById('success-state').style.display = 'block'
           window.scrollTo({ top: 0, behavior: 'smooth' })
+
+          // Generate flyer if requested
+          if (wantsFlyer) {
+            generateFlyer(payload, data.id)
+          }
         } else {
           alertEl.innerHTML = `<div class="alert alert--error">${data.error || 'Submission failed. Please try again.'}</div>`
           btn.disabled = false
