@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Merch — Bradley's Hugs</title>
+  <link rel="icon" href="/images/favicon.png" type="image/png">
+  <link rel="stylesheet" href="./styles/main.css">
+  <style>
+    .page-hero { background: var(--brown-dark); padding: 4rem 2rem 3rem; text-align: center; }
+    .page-hero h1 { color: #fff; font-size: clamp(2rem, 5vw, 3rem); }
+    .page-hero p { color: rgba(255,255,255,0.5); margin-top: 0.75rem; max-width: 560px; margin-left: auto; margin-right: auto; }
+
+    .merch-section { background: var(--warm-white); }
+
+    .merch-card__body { padding: 1.25rem; text-align: center; }
+    .merch-card__price { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--gold); margin: 0.4rem 0 1rem; }
+
+    .store-banner { background: var(--brown); color: #fff; padding: 2.5rem 2rem; text-align: center; }
+    .store-banner__icon { font-size: 2rem; margin-bottom: 0.75rem; }
+    .store-banner h3 { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--gold-light); margin-bottom: 0.75rem; }
+    .store-banner p { font-size: 0.92rem; color: rgba(255,255,255,0.7); max-width: 560px; margin: 0 auto 1.5rem; line-height: 1.8; }
+
+    @media (max-width: 768px) {
+      .grid-3 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div id="site-nav"></div>
+
+  <div class="page-hero">
+    <span class="eyebrow">Wear the Mission</span>
+    <h1>Bradley's Hugs <em>Merch</em></h1>
+    <p>Every purchase helps fund search operations, trapping equipment, and supplies for lost and stolen dogs. All items are sold through our partner store.</p>
+  </div>
+
+  <!-- PRODUCTS -->
+  <section class="section merch-section">
+    <div class="container">
+      <div class="text-center mb-2">
+        <span class="eyebrow">Shop the Collection</span>
+        <h2 class="section-title">Support <em>Bradley's Hugs</em></h2>
+      </div>
+
+      <div class="grid-3">
+
+        <!-- SWAP: replace placeholder with real product photo -->
+        <div class="card">
+          <div class="card__img card__img--placeholder">👕</div>
+          <div class="merch-card__body">
+            <div class="card__title">Bradley's Hugs T-Shirt</div>
+            <div class="merch-card__price">$24.00</div>
+            <p class="card__desc">Soft cotton tee with our logo, in memory of Bradley.</p>
+            <a href="https://www.example-store.com/bradleys-hugs-tshirt" target="_blank" rel="noopener" class="btn btn--brown btn--full" style="margin-top:1rem;">Buy on Our Store</a>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card__img card__img--placeholder">🧥</div>
+          <div class="merch-card__body">
+            <div class="card__title">Bradley's Hugs Hoodie</div>
+            <div class="merch-card__price">$42.00</div>
+            <p class="card__desc">Cozy pullover hoodie, perfect for search-day weather.</p>
+            <a href="https://www.example-store.com/bradleys-hugs-hoodie" target="_blank" rel="noopener" class="btn btn--brown btn--full" style="margin-top:1rem;">Buy on Our Store</a>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card__img card__img--placeholder">🏷️</div>
+          <div class="merch-card__body">
+            <div class="card__title">Paw Print Sticker Pack</div>
+            <div class="merch-card__price">$6.00</div>
+            <p class="card__desc">Set of 3 weatherproof stickers for your car or water bottle.</p>
+            <a href="https://www.example-store.com/bradleys-hugs-stickers" target="_blank" rel="noopener" class="btn btn--brown btn--full" style="margin-top:1rem;">Buy on Our Store</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- STORE BANNER -->
+  <div class="store-banner">
+    <div class="store-banner__icon">🛍️</div>
+    <h3>Shop the Full Collection</h3>
+    <p>All merch is fulfilled by our partner store. 100% of proceeds go toward reuniting lost and stolen dogs with their families.</p>
+    <a href="https://www.example-store.com/bradleys-hugs" target="_blank" rel="noopener" class="btn btn--gold">Visit Our Store</a>
+  </div>
+
+  <div id="site-footer"></div>
+
+  <script type="module">
+    import { renderNav, renderFooter } from './components/layout.js'
+    renderNav('Merch')
+    renderFooter()
+  </script>
+</body>
+</html>

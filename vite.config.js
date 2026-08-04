@@ -15,6 +15,7 @@ export default defineConfig({
         admin:        'src/admin.html',
         partners:     'src/partners.html',
         donate:       'src/donate.html',
+        merch:        'src/merch.html',
         unauthorized: 'src/unauthorized.html',
       }
     }
