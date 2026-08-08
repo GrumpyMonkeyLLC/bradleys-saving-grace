@@ -255,7 +255,7 @@
     async function loadDashboard() {
       try {
         const [statsRes, dogsRes] = await Promise.all([
-          fetch('/api/lost-dogs-stats'),
+          fetch('/api/lost-dogs/stats'),
           fetch('/api/lost-dogs?limit=10')
         ])
         const stats = await statsRes.json()

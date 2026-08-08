@@ -70,7 +70,7 @@ em { font-style: italic; color: var(--gold); }
 .site-nav__inner {
   max-width: 1100px; margin: 0 auto;
   display: flex; align-items: center; justify-content: space-between;
-  padding: 1rem 2rem;
+  padding: 1rem 1.5rem;
 }
 
 .site-nav__logo {
@@ -92,17 +92,18 @@ em { font-style: italic; color: var(--gold); }
 .site-nav__links {
   list-style: none;
   display: flex;
-  gap: 2rem;
+  gap: 1.25rem;
   align-items: center;
 }
 
 .site-nav__links a {
   color: rgba(255,255,255,0.6);
   text-decoration: none;
-  font-size: 0.82rem;
-  letter-spacing: 0.08em;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   font-weight: 500;
+  white-space: nowrap;
   transition: color 0.2s;
 }
 
@@ -111,7 +112,7 @@ em { font-style: italic; color: var(--gold); }
 .site-nav__links .nav-cta {
   background: var(--gold);
   color: var(--brown-dark);
-  padding: 0.5rem 1.25rem;
+  padding: 0.5rem 1rem;
   border-radius: 50px;
   font-weight: 500;
 }

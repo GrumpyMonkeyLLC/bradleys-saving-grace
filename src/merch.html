@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Merch — Bradley's Hugs</title>
+  <link rel="icon" href="/images/favicon.png" type="image/png">
+  <link rel="stylesheet" href="./styles/main.css">
+  <style>
+    .page-hero { background: var(--brown-dark); padding: 4rem 2rem 3rem; text-align: center; }
+    .page-hero h1 { color: #fff; font-size: clamp(2rem, 5vw, 3rem); }
+    .page-hero p { color: rgba(255,255,255,0.5); margin-top: 0.75rem; max-width: 560px; margin-left: auto; margin-right: auto; }
+
+    .merch-section { background: var(--warm-white); }
+
+    .coming-soon { text-align: center; padding: 2rem 1rem; }
+    .coming-soon__icon { font-size: 3rem; margin-bottom: 1rem; }
+    .coming-soon p { max-width: 480px; margin: 0.75rem auto 0; color: var(--text-muted, #6b6b6b); line-height: 1.8; }
+  </style>
+</head>
+<body>
+  <div id="site-nav"></div>
+
+  <div class="page-hero">
+    <span class="eyebrow">Wear the Mission</span>
+    <h1>Bradley's Hugs <em>Merch</em></h1>
+    <p>Every purchase helps fund search operations, trapping equipment, and supplies for lost and stolen dogs.</p>
+  </div>
+
+  <!-- COMING SOON -->
+  <section class="section merch-section">
+    <div class="container">
+      <div class="coming-soon">
+        <div class="coming-soon__icon">👕</div>
+        <h2 class="section-title">Coming <em>Soon</em></h2>
+        <p>We're putting together our merch store. Check back soon for ways to wear the mission and support lost and stolen dogs.</p>
+      </div>
+    </div>
+  </section>
+
+  <div id="site-footer"></div>
+
+  <script type="module">
+    import { renderNav, renderFooter } from './components/layout.js'
+    renderNav('Merch')
+    renderFooter()
+  </script>
+</body>
+</html>

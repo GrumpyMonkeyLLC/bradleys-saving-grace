@@ -6,6 +6,7 @@ export function renderNav(activePage = '') {
     { href: '/report.html',   label: 'Report a Dog' },
     { href: '/partners.html', label: 'Partners' },
     { href: '/donate.html',   label: 'Donate' },
+    { href: '/merch.html',    label: 'Merch' },
     { href: '/contact.html',  label: 'Contact' },
   ]
   const navLinks = links.map(l =>
@@ -65,6 +66,7 @@ export function renderFooter() {
         <a href="/listings.html">Lost Dogs</a>
         <a href="/report.html">Report a Dog</a>
         <a href="/donate.html">Donate</a>
+        <a href="/merch.html">Merch</a>
         <a href="/contact.html">Contact</a>
         <a href="/partners.html">Partners</a>
         <a href="/admin.html">Admin</a>
