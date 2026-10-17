@@ -6,6 +6,7 @@
   <title>Bradley's Hugs — Reuniting Lost & Stolen Dogs</title>
   <meta name="description" content="Bradley's Hugs is a nonprofit helping reunite lost and stolen dogs with their families through rapid response, community, and advocacy.">
   <link rel="icon" href="/images/favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
   <link rel="stylesheet" href="./styles/main.css">
   <style>
     /* ---- HERO ---- */
@@ -30,6 +31,12 @@
       background-size: 100px 100px;
     }
     .hero__content { position: relative; z-index: 2; max-width: 780px; }
+    .hero__logo {
+      display: block; margin: 0 auto 1.75rem;
+      width: clamp(150px, 26vw, 220px); height: auto;
+      background: #fff; border-radius: 22px; padding: 0.75rem;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.35), 0 0 0 3px rgba(201,152,58,0.5);
+    }
     .hero__tag {
       display: inline-block; margin-bottom: 1.5rem;
       font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase;
@@ -171,6 +178,7 @@
     <div class="hero__glow"></div>
     <div class="hero__paw-bg"></div>
     <div class="hero__content">
+      <img src="/images/logo.webp" alt="Bradley's Saving Grace — Inspired by one, saving many" class="hero__logo fade-up" width="220" height="240">
       <span class="hero__tag fade-up">In memory of Bradley · A nonprofit in his name</span>
       <h1 class="hero__title fade-up fade-up--1">Bradley's<br><em>Hugs</em></h1>
       <p class="hero__sub fade-up fade-up--2">Helping reunite lost and stolen dogs with their families — through rapid response, community engagement, and love.</p>

@@ -78,7 +78,21 @@ em { font-style: italic; color: var(--gold); }
   color: var(--gold-light);
   text-decoration: none;
   font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
 }
+
+.site-nav__logo-img {
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 0 2px var(--gold);
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+.site-nav__logo:hover .site-nav__logo-img { transform: rotate(-6deg) scale(1.05); }
+.site-nav__logo-text { display: block; }
 
 .site-nav__logo span {
   display: block;
@@ -216,6 +230,12 @@ em { font-style: italic; color: var(--gold); }
   color: rgba(255,255,255,0.4);
   padding: 3rem 2rem;
   text-align: center;
+}
+/* Full logo has a white background, so it sits on a cream card */
+.site-footer__logo-img {
+  display: block; margin: 0 auto 1.25rem;
+  width: 160px; height: auto;
+  background: #fff; border-radius: 16px; padding: 0.6rem;
 }
 .site-footer__logo { font-family: 'Playfair Display', serif; color: var(--gold-light); font-size: 1.3rem; margin-bottom: 0.4rem; }
 .site-footer p { font-size: 0.82rem; line-height: 1.8; }

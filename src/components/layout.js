@@ -17,8 +17,11 @@ export function renderNav(activePage = '') {
     <nav class="site-nav">
       <div class="site-nav__inner">
         <a href="/index.html" class="site-nav__logo">
-          Bradley's Hugs
-          <span>🐾 Nonprofit Organization</span>
+          <img src="/images/logo-mark.png" alt="" class="site-nav__logo-img" width="48" height="48">
+          <span class="site-nav__logo-text">
+            Bradley's Hugs
+            <span>🐾 Nonprofit Organization</span>
+          </span>
         </a>
         <ul class="site-nav__links" id="nav-links">
           ${navLinks}
@@ -58,6 +61,7 @@ export function renderNav(activePage = '') {
 export function renderFooter() {
   document.getElementById('site-footer').innerHTML = `
     <footer class="site-footer">
+      <img src="/images/logo.webp" alt="Bradley's Saving Grace logo — Inspired by one, saving many" class="site-footer__logo-img" width="160" height="175" loading="lazy">
       <div class="site-footer__logo">Bradley's Hugs</div>
       <p>A nonprofit organization in formation · In loving memory of Bradley 🐾</p>
       <div class="site-footer__divider"></div>
