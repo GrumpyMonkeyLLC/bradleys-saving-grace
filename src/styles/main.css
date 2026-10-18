@@ -78,7 +78,20 @@ em { font-style: italic; color: var(--gold); }
   color: var(--gold-light);
   text-decoration: none;
   font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
 }
+
+.site-nav__logo-img {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px var(--gold);
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+.site-nav__logo:hover .site-nav__logo-img { transform: rotate(-6deg) scale(1.05); }
+.site-nav__logo-text { display: block; }
 
 .site-nav__logo span {
   display: block;

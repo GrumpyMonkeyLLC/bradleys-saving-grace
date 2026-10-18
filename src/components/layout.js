@@ -1,4 +1,7 @@
 // Shared navigation and footer injected into every page
+
+// Resolved relative to this file so it works both from the Vite build and when src/ is served as-is
+const logoMark = new URL('../images/logo-mark.png', import.meta.url).href
 export function renderNav(activePage = '') {
   const links = [
     { href: '/index.html',    label: 'Home' },
@@ -17,8 +20,11 @@ export function renderNav(activePage = '') {
     <nav class="site-nav">
       <div class="site-nav__inner">
         <a href="/index.html" class="site-nav__logo">
-          Bradley's Hugs
-          <span>🐾 Nonprofit Organization</span>
+          <img src="${logoMark}" alt="" class="site-nav__logo-img" width="44" height="44">
+          <div class="site-nav__logo-text">
+            Bradley's Hugs
+            <span>Nonprofit Organization</span>
+          </div>
         </a>
         <ul class="site-nav__links" id="nav-links">
           ${navLinks}
