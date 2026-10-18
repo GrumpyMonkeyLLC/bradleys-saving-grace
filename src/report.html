@@ -268,6 +268,7 @@
 
               <div class="upload-status" id="upload-status"></div>
 
+              <div class="captcha-slot mt-3" id="report-captcha"></div>
               <button type="submit" class="btn btn--gold btn--full mt-3" id="submit-btn" style="font-size:1rem;padding:1rem;">
                 Submit Report
               </button>
@@ -331,6 +332,8 @@
 
   <script type="module">
     import { renderNav, renderFooter } from './components/layout.js'
+    import { esc } from './components/escape.js'
+    import { mountCaptcha } from './components/captcha.js'
     renderNav('Report a Dog')
     renderFooter()
 
@@ -383,12 +386,16 @@
       })
     }
 
-    async function uploadPhoto(file) {
+    const captcha = mountCaptcha(document.getElementById('report-captcha'))
+
+    async function uploadPhoto(file, dogId, ticket) {
       statusDiv.textContent = 'Compressing photo…'
       const compressed = await compressImage(file)
       const kb = Math.round(compressed.size / 1024)
       statusDiv.textContent = `Uploading photo (${kb}KB)…`
       const fd = new FormData()
+      fd.append('dogId', dogId)
+      fd.append('ticket', ticket)
       fd.append('photo', compressed, 'photo.jpg')
       const res  = await fetch('/api/upload-photo', { method: 'POST', body: fd })
       const data = await res.json()
@@ -397,7 +404,7 @@
       return data.url
     }
 
-    async function generateFlyer(payload, dogId) {
+    async function generateFlyer(dogId, ticket) {
       const flyerSection  = document.getElementById('flyer-section')
       const flyerLoading  = document.getElementById('flyer-loading-text')
       const flyerBtn      = document.getElementById('flyer-download-btn')
@@ -409,7 +416,7 @@
         const res  = await fetch('/api/generate-flyer', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ ...payload, name: payload.dogName, dogId })
+          body: JSON.stringify({ dogId, ticket })
         })
         const data = await res.json()
         if (res.ok && data.flyerUrl) {
@@ -432,29 +439,31 @@
       e.preventDefault()
       const btn     = document.getElementById('submit-btn')
       const alertEl = document.getElementById('form-alert')
+      const resetButton = () => {
+        btn.disabled = false
+        btn.textContent = 'Submit Report'
+        statusDiv.textContent = ''
+      }
       btn.disabled  = true
       alertEl.innerHTML = ''
       statusDiv.textContent = ''
+
+      const captchaToken = await captcha.token()
+      if (!captchaToken) {
+        alertEl.innerHTML = `<div class="alert alert--error">Please complete the captcha.</div>`
+        resetButton()
+        return
+      }
 
       const formData = new FormData(e.target)
       const files    = Array.from(photosInput.files).slice(0, 1)
       const wantsFlyer = document.getElementById('generateFlyer').checked
 
-      let photoUrl = ''
-      if (files.length > 0) {
-        btn.textContent = 'Uploading photo…'
-        try {
-          photoUrl = await uploadPhoto(files[0])
-        } catch (err) {
-          alertEl.innerHTML = `<div class="alert alert--error">Photo upload failed: ${err.message}. Submitting without photo.</div>`
-          statusDiv.textContent = ''
-        }
-      }
-
       btn.textContent = 'Submitting report…'
       statusDiv.textContent = 'Saving report…'
 
       const payload = {
+        captchaToken,
         dogName:          formData.get('dogName'),
         breed:            formData.get('breed'),
         color:            formData.get('color'),
@@ -472,38 +481,53 @@
         ownerName:        formData.get('ownerName'),
         phone:            formData.get('phone'),
         email:            formData.get('email'),
-        photoUrl,
       }
 
+      // 1. Save the report (this is the step the captcha protects)
+      let data
       try {
-        const res  = await fetch('/api/lost-dogs', {
+        const res = await fetch('/api/lost-dogs', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
         })
-        const data = await res.json()
-
-        if (res.ok) {
-          document.getElementById('report-form-wrap').style.display = 'none'
-          document.getElementById('success-state').style.display = 'block'
-          window.scrollTo({ top: 0, behavior: 'smooth' })
-
-          // Generate flyer if requested
-          if (wantsFlyer) {
-            generateFlyer(payload, data.id)
-          }
-        } else {
-          alertEl.innerHTML = `<div class="alert alert--error">${data.error || 'Submission failed. Please try again.'}</div>`
-          btn.disabled = false
-          btn.textContent = 'Submit Report'
-          statusDiv.textContent = ''
+        data = await res.json()
+        if (!res.ok) {
+          alertEl.innerHTML = `<div class="alert alert--error">${esc(data.error || 'Submission failed. Please try again.')}</div>`
+          resetButton()
+          captcha.reset()
+          return
         }
       } catch (err) {
-        alertEl.innerHTML = `<div class="alert alert--error">Network error: ${err.message}</div>`
-        btn.disabled = false
-        btn.textContent = 'Submit Report'
-        statusDiv.textContent = ''
+        alertEl.innerHTML = `<div class="alert alert--error">Network error: ${esc(err.message)}</div>`
+        resetButton()
+        captcha.reset()
+        return
       }
+
+      // 2. Attach the photo, using the ticket the server gave this report
+      let photoFailed = false
+      if (files.length > 0) {
+        btn.textContent = 'Uploading photo…'
+        try {
+          await uploadPhoto(files[0], data.id, data.ticket)
+        } catch {
+          photoFailed = true
+        }
+      }
+
+      document.getElementById('report-form-wrap').style.display = 'none'
+      document.getElementById('success-state').style.display = 'block'
+      if (photoFailed) {
+        const note = document.createElement('p')
+        note.style.cssText = 'color:#c0392b;font-size:.88rem;margin-top:1rem;'
+        note.textContent = 'Your report was saved, but the photo could not be uploaded. Please contact us and we can add it for you.'
+        document.getElementById('success-state').appendChild(note)
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+
+      // 3. Build the flyer from the saved report
+      if (wantsFlyer) generateFlyer(data.id, data.ticket)
     })
   </script>
 </body>

@@ -1,5 +1,6 @@
 const { app } = require('@azure/functions')
 const { TableClient, AzureNamedKeyCredential } = require('@azure/data-tables')
+const { verifyCaptcha, CAPTCHA_ERROR } = require('../shared/security')
 
 function getClient() {
   const account = process.env.AZURE_STORAGE_ACCOUNT_NAME
@@ -20,6 +21,7 @@ app.http('subscribe-post', {
   handler: async (request) => {
     try {
       const body = await request.json()
+      if (!(await verifyCaptcha(body.captchaToken, request))) return CAPTCHA_ERROR
       const email = (body.email || '').trim().toLowerCase()
       if (!email || email.length > 254 || !/^[^\s@<>"'`]+@[^\s@<>"'`]+\.[^\s@<>"'`]+$/.test(email)) {
         return { status: 400, jsonBody: { error: 'Please provide a valid email address.' } }

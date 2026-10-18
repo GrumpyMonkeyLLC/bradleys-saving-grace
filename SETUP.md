@@ -137,8 +137,19 @@ Your database stores dog reports, messages, and subscribers.
    |------|-------|
    | `AZURE_STORAGE_ACCOUNT_NAME` | your storage account name from Step 2 |
    | `AZURE_STORAGE_ACCOUNT_KEY` | your key1 from Step 2 |
+   | `HCAPTCHA_SECRET` | your hCaptcha secret key (see below) |
 
 4. Click **"Save"**
+
+### hCaptcha (spam protection on the forms)
+
+The report, contact, partner and newsletter forms use [hCaptcha](https://www.hcaptcha.com/).
+
+1. Sign up at https://dashboard.hcaptcha.com and add your site's domain.
+2. Copy the **site key** into `HCAPTCHA_SITEKEY` in `src/components/captcha.js`. It's public, so it's fine in the code.
+3. Copy your account's **secret key** into the `HCAPTCHA_SECRET` environment variable above. Never commit it.
+
+Until `HCAPTCHA_SECRET` is set, the server skips captcha checks so the forms keep working.
 
 ---
 

@@ -1,5 +1,6 @@
 const { app } = require('@azure/functions')
 const { TableClient, AzureNamedKeyCredential } = require('@azure/data-tables')
+const { verifyCaptcha, CAPTCHA_ERROR, makeTicket } = require('../shared/security')
 
 // ─────────────────────────────────────────────
 // Azure Table Storage helper
@@ -80,17 +81,13 @@ app.http('lost-dogs-post', {
   handler: async (request) => {
     try {
       const body = await request.json()
+      if (!(await verifyCaptcha(body.captchaToken, request))) return CAPTCHA_ERROR
       const required = ['dogName', 'breed', 'color', 'status', 'dateLost', 'city', 'state', 'ownerName', 'phone', 'email']
       for (const field of required) {
         if (!body[field]) return { status: 400, jsonBody: { error: `Missing required field: ${field}` } }
       }
       if (!['Lost', 'Stolen'].includes(body.status)) {
         return { status: 400, jsonBody: { error: 'Status must be Lost or Stolen.' } }
-      }
-      // Photos must come from our own upload endpoint (the dog-photos blob container)
-      const photoPrefix = `https://${process.env.AZURE_STORAGE_ACCOUNT_NAME}.blob.core.windows.net/dog-photos/`
-      if (body.photoUrl && !String(body.photoUrl).startsWith(photoPrefix)) {
-        return { status: 400, jsonBody: { error: 'Invalid photo URL.' } }
       }
       // Keep stored text to a sane length
       const clip = (v, n = 200) => String(v ?? '').slice(0, n)
@@ -118,12 +115,12 @@ app.http('lost-dogs-post', {
         ownerName:        clip(body.ownerName),
         phone:            clip(body.phone),
         email:            clip(body.email),
-        photoUrl:         body.photoUrl || '',
+        photoUrl:         '', // set by /api/upload-photo using the report ticket
         createdAt:        new Date().toISOString(),
       }
       await client.createEntity(entity)
       // TODO: send notification email here (see SETUP.md)
-      return { status: 201, jsonBody: { id, message: 'Report submitted successfully' } }
+      return { status: 201, jsonBody: { id, ticket: makeTicket(id), message: 'Report submitted successfully' } }
     } catch (err) {
       return { status: 500, jsonBody: { error: err.message } }
     }

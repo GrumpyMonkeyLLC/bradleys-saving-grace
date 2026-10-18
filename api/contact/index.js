@@ -1,5 +1,6 @@
 const { app } = require('@azure/functions')
 const { TableClient, AzureNamedKeyCredential } = require('@azure/data-tables')
+const { verifyCaptcha, CAPTCHA_ERROR } = require('../shared/security')
 
 function getClient() {
   const account = process.env.AZURE_STORAGE_ACCOUNT_NAME
@@ -44,6 +45,7 @@ app.http('contact-post', {
       if (!body.name || !body.email || !body.message) {
         return { status: 400, jsonBody: { error: 'Name, email, and message are required.' } }
       }
+      if (!(await verifyCaptcha(body.captchaToken, request))) return CAPTCHA_ERROR
       const client = getClient()
       await ensureTable(client)
       const id = `msg-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`

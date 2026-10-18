@@ -336,3 +336,6 @@ em { font-style: italic; color: var(--gold); }
 .info-item__icon, .photo-upload__icon, .coming-soon__icon, .story__ornament {
   color: var(--gold);
 }
+
+/* ---- CAPTCHA ---- */
+.captcha-slot { margin: 0.5rem 0 1rem; min-height: 78px; }

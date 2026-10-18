@@ -326,6 +326,7 @@
         <input type="email" placeholder="Your email address" required id="newsletter-email">
         <button type="submit" class="btn">Notify Me</button>
       </form>
+      <div id="newsletter-captcha"></div>
       <p id="newsletter-msg" style="margin-top:1rem; font-size:0.85rem; color:var(--brown-dark); display:none;"></p>
     </div>
   </section>
@@ -335,6 +336,7 @@
   <script type="module">
     import { renderNav, renderFooter } from './components/layout.js'
     import { esc, safeUrl } from './components/escape.js'
+    import { mountCaptcha } from './components/captcha.js'
     renderNav('Home')
     renderFooter()
 
@@ -395,24 +397,32 @@
     loadStats()
 
     // Newsletter
+    const newsletterCaptcha = mountCaptcha(document.getElementById('newsletter-captcha'), { invisible: true })
+
     document.getElementById('newsletter-form').addEventListener('submit', async e => {
       e.preventDefault()
       const email = document.getElementById('newsletter-email').value
       const msg = document.getElementById('newsletter-msg')
+      msg.style.display = 'block'
       try {
+        const captchaToken = await newsletterCaptcha.token()
+        if (!captchaToken) { msg.textContent = 'Please complete the captcha to subscribe.'; return }
         const res = await fetch('/api/subscribe', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email })
+          body: JSON.stringify({ email, captchaToken })
         })
         const data = await res.json()
-        msg.style.display = 'block'
-        msg.textContent = data.message || 'Thank you! We\'ll be in touch.'
-        document.getElementById('newsletter-email').value = ''
+        if (res.ok) {
+          msg.textContent = data.message || 'Thank you! We\'ll be in touch.'
+          document.getElementById('newsletter-email').value = ''
+        } else {
+          msg.textContent = data.error || 'Something went wrong. Please try again.'
+        }
       } catch {
-        msg.style.display = 'block'
         msg.textContent = 'Something went wrong. Please try again.'
       }
+      newsletterCaptcha.reset()
     })
   </script>
 </body>
