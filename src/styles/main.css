@@ -324,3 +324,15 @@ em { font-style: italic; color: var(--gold); }
   .site-nav__links { display: none !important; }
   .nav-hamburger { display: flex; }
 }
+
+/* ---- ICONS (inline Lucide SVGs, sized to the surrounding text) ---- */
+.icon {
+  width: 1em; height: 1em;
+  display: inline-block; vertical-align: -0.14em;
+  flex-shrink: 0;
+}
+.icon--accent,
+.pillar__icon, .service-card__icon, .impact-card__icon, .tax-banner__icon,
+.info-item__icon, .photo-upload__icon, .coming-soon__icon, .story__ornament {
+  color: var(--gold);
+}

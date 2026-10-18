@@ -38,7 +38,7 @@ export function renderNav(activePage = '') {
         <ul>
           ${navLinks}
           <li><a href="/report.html" class="nav-cta-mobile">Report Lost Dog</a></li>
-          <li><a href="/admin.html" style="color:rgba(255,255,255,0.3);font-size:0.85rem;">⚙ Admin Panel</a></li>
+          <li><a href="/admin.html" style="color:rgba(255,255,255,0.3);font-size:0.85rem;">Admin Panel</a></li>
         </ul>
       </div>
     </nav>
@@ -65,7 +65,7 @@ export function renderFooter() {
   document.getElementById('site-footer').innerHTML = `
     <footer class="site-footer">
       <div class="site-footer__logo">Bradley's Hugs</div>
-      <p>A nonprofit organization in formation · In loving memory of Bradley 🐾</p>
+      <p>A nonprofit organization in formation · In loving memory of Bradley</p>
       <div class="site-footer__divider"></div>
       <nav class="site-footer__links">
         <a href="/index.html">Home</a>
