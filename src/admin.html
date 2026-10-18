@@ -122,11 +122,11 @@
     <!-- SIDEBAR -->
     <aside class="admin-sidebar">
       <div class="admin-sidebar__section">Overview</div>
-      <a href="#" class="active" data-panel="dashboard">📊 Dashboard</a>
+      <a href="#" class="active" data-panel="dashboard"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg> Dashboard</a>
       <div class="admin-sidebar__section">Manage</div>
-      <a href="#" data-panel="dogs">🐕 Lost Dog Reports</a>
-      <a href="#" data-panel="messages">✉️ Contact Messages</a>
-      <a href="#" data-panel="subscribers">📧 Subscribers</a>
+      <a href="#" data-panel="dogs"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11.25 16.25h1.5L12 17z"/><path d="M16 14v.5"/><path d="M4.42 11.247A13.152 13.152 0 0 0 4 14.556C4 18.728 7.582 21 12 21s8-2.272 8-6.444a11.702 11.702 0 0 0-.493-3.309"/><path d="M8 14v.5"/><path d="M8.5 8.5c-.384 1.05-1.083 2.028-2.344 2.5-1.931.722-3.576-.297-3.656-1-.113-.994 1.177-6.53 4-7 1.923-.321 3.651.845 3.651 2.235A7.497 7.497 0 0 1 14 5.277c0-1.39 1.844-2.598 3.767-2.277 2.823.47 4.113 6.006 4 7-.08.703-1.725 1.722-3.656 1-1.261-.472-1.855-1.45-2.239-2.5"/></svg> Lost Dog Reports</a>
+      <a href="#" data-panel="messages"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> Contact Messages</a>
+      <a href="#" data-panel="subscribers"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Subscribers</a>
     </aside>
 
     <!-- MAIN -->
@@ -141,7 +141,7 @@
         <div class="stat-cards">
           <div class="stat-card"><div class="stat-card__num" id="dash-reports">—</div><div class="stat-card__label">Total Reports</div></div>
           <div class="stat-card"><div class="stat-card__num" id="dash-active">—</div><div class="stat-card__label">Active / Lost</div></div>
-          <div class="stat-card"><div class="stat-card__num" id="dash-reunited">—</div><div class="stat-card__label">Reunited 🎉</div></div>
+          <div class="stat-card"><div class="stat-card__num" id="dash-reunited">—</div><div class="stat-card__label">Reunited</div></div>
           <div class="stat-card"><div class="stat-card__num" id="dash-subscribers">—</div><div class="stat-card__label">Subscribers</div></div>
         </div>
         <div class="admin-table-wrap">
@@ -307,7 +307,7 @@
             <td>${d.city || ''}, ${d.state || ''}</td>
             <td>${formatDate(d.dateLost)}</td>
             <td style="display:flex;gap:.4rem;flex-wrap:wrap;">
-              <button class="action-btn action-btn--success" onclick="markFound('${d.id}')">Found ✓</button>
+              <button class="action-btn action-btn--success" onclick="markFound('${d.id}')">Mark Found</button>
               <button class="action-btn action-btn--danger" onclick="deleteReport('${d.id}')">Delete</button>
             </td>
           </tr>`).join('')
