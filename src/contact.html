@@ -102,6 +102,7 @@
               <label for="message">Message *</label>
               <textarea id="message" name="message" rows="6" required placeholder="Tell us how we can help…"></textarea>
             </div>
+            <div class="captcha-slot" id="contact-captcha"></div>
             <button type="submit" class="btn btn--gold btn--full" id="contact-btn">
               Send Message
             </button>
@@ -165,8 +166,12 @@
 
   <script type="module">
     import { renderNav, renderFooter } from './components/layout.js'
+    import { esc, safeUrl } from './components/escape.js'
+    import { mountCaptcha } from './components/captcha.js'
     renderNav('Contact')
     renderFooter()
+
+    const captcha = mountCaptcha(document.getElementById('contact-captcha'))
 
     document.getElementById('contact-form').addEventListener('submit', async e => {
       e.preventDefault()
@@ -175,8 +180,16 @@
       btn.disabled = true; btn.textContent = 'Sending…'
       alertEl.innerHTML = ''
 
+      const captchaToken = await captcha.token()
+      if (!captchaToken) {
+        alertEl.innerHTML = `<div class="alert alert--error">Please complete the captcha.</div>`
+        btn.disabled = false; btn.textContent = 'Send Message'
+        return
+      }
+
       const form = e.target
       const payload = {
+        captchaToken,
         name:    form.name.value,
         email:   form.email.value,
         subject: form.subject.value,
@@ -195,12 +208,14 @@
           document.getElementById('contact-form').style.display = 'none'
           document.getElementById('contact-success').style.display = 'block'
         } else {
-          alertEl.innerHTML = `<div class="alert alert--error">${data.error || 'Submission failed.'}</div>`
+          alertEl.innerHTML = `<div class="alert alert--error">${esc(data.error || 'Submission failed.')}</div>`
           btn.disabled = false; btn.textContent = 'Send Message'
+          captcha.reset()
         }
       } catch {
         alertEl.innerHTML = `<div class="alert alert--error">Network error. Please try again.</div>`
         btn.disabled = false; btn.textContent = 'Send Message'
+        captcha.reset()
       }
     })
   </script>

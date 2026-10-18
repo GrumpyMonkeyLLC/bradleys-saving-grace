@@ -1,4 +1,6 @@
 const { app } = require('@azure/functions')
+const { checkTicket } = require('../shared/security')
+const { getDogsTable, findDog } = require('../shared/dogs')
 const { BlobServiceClient, StorageSharedKeyCredential } = require('@azure/storage-blob')
 const PDFDocument = require('pdfkit')
 
@@ -16,6 +18,9 @@ async function ensureContainer(containerClient) {
 
 async function fetchPhoto(photoUrl) {
   if (!photoUrl) return null
+  // Only fetch photos from our own upload container, never arbitrary URLs
+  const allowed = `https://${process.env.AZURE_STORAGE_ACCOUNT_NAME}.blob.core.windows.net/dog-photos/`
+  if (!String(photoUrl).startsWith(allowed)) return null
   try {
     const res = await fetch(photoUrl)
     if (!res.ok) return null
@@ -111,25 +116,14 @@ app.http('generate-flyer', {
   handler: async (request) => {
     try {
       const body = await request.json()
-      if (!body.name && !body.dogName) {
-        return { status: 400, jsonBody: { error: 'Missing dog name' } }
+      // Flyers are built from the stored report, and only for a report that just passed the captcha
+      if (!checkTicket(body.dogId, body.ticket)) {
+        return { status: 403, jsonBody: { error: 'Flyer not allowed. Please submit the report again.' } }
       }
+      const dog = await findDog(getDogsTable(), body.dogId)
+      if (!dog) return { status: 404, jsonBody: { error: 'Report not found' } }
 
-      const dog = {
-        name:     body.name || body.dogName,
-        breed:    body.breed,
-        color:    body.color,
-        size:     body.size,
-        age:      body.age,
-        status:   body.status,
-        dateLost: body.dateLost,
-        city:     body.city,
-        state:    body.state,
-        phone:    body.phone,
-        email:    body.email,
-      }
-
-      const photoBuffer = await fetchPhoto(body.photoUrl)
+      const photoBuffer = await fetchPhoto(dog.photoUrl)
 
       const doc = new PDFDocument({ size: 'LETTER', margin: 0 })
       const chunks = []
@@ -149,8 +143,7 @@ app.http('generate-flyer', {
       const containerClient = blobServiceClient.getContainerClient('flyers')
       await ensureContainer(containerClient)
 
-      const dogId = body.dogId || `dog-${Date.now()}`
-      const blobName = `${dogId}-flyer.pdf`
+      const blobName = `${dog.rowKey}-flyer.pdf`
       const blockBlobClient = containerClient.getBlockBlobClient(blobName)
 
       await blockBlobClient.upload(pdfBuffer, pdfBuffer.length, {

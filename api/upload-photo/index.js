@@ -1,5 +1,7 @@
 const { app } = require('@azure/functions')
 const { BlobServiceClient, StorageSharedKeyCredential } = require('@azure/storage-blob')
+const { checkTicket } = require('../shared/security')
+const { getDogsTable, findDog } = require('../shared/dogs')
 
 function getBlobClient() {
   const account = process.env.AZURE_STORAGE_ACCOUNT_NAME
@@ -69,13 +71,23 @@ app.http('upload-photo', {
       // Read raw body as buffer
       const arrayBuffer = await request.arrayBuffer()
 
-      // Hard size limit: 3MB raw upload max
+      // Hard size limit: 5MB raw upload max
       if (arrayBuffer.byteLength > 5 * 1024 * 1024) {
-        return { status: 400, jsonBody: { error: 'Upload too large. Maximum 3MB.' } }
+        return { status: 400, jsonBody: { error: 'Upload too large. Maximum 5MB.' } }
       }
 
       const buffer = Buffer.from(arrayBuffer)
       const parts = parseMultipart(buffer, boundary)
+
+      // Only a report that just passed the captcha can attach a photo
+      const field = name => parts.find(p => p.name === name)?.data.toString('utf8') || ''
+      const dogId = field('dogId')
+      if (!checkTicket(dogId, field('ticket'))) {
+        return { status: 403, jsonBody: { error: 'Upload not allowed. Please submit the report again.' } }
+      }
+      const table = getDogsTable()
+      const dog = await findDog(table, dogId)
+      if (!dog) return { status: 404, jsonBody: { error: 'Report not found' } }
 
       const photoPart = parts.find(p => p.name === 'photo')
       if (!photoPart || !photoPart.data || photoPart.data.length === 0) {
@@ -102,7 +114,7 @@ app.http('upload-photo', {
 
       // Generate unique blob name
       const ext = safeMime.split('/')[1].replace('jpeg', 'jpg')
-      const blobName = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`
+      const blobName = `${dogId}-${Date.now()}.${ext}`
 
       // Upload to Azure Blob Storage
       const blobServiceClient = getBlobClient()
@@ -112,6 +124,9 @@ app.http('upload-photo', {
       await blockBlobClient.upload(imageBuffer, imageBuffer.length, {
         blobHTTPHeaders: { blobContentType: safeMime }
       })
+
+      // Attach the photo to the report
+      await table.updateEntity({ partitionKey: dog.partitionKey, rowKey: dog.rowKey, photoUrl: blockBlobClient.url }, 'Merge')
 
       return { status: 201, jsonBody: { url: blockBlobClient.url } }
 

@@ -259,6 +259,7 @@
             <textarea id="message" name="message" rows="5" required
               placeholder="What does your organization do? Why do you want to partner with Bradley's Hugs?"></textarea>
           </div>
+          <div class="captcha-slot" id="partner-captcha"></div>
           <button type="submit" class="btn btn--gold btn--full" id="partner-btn" style="font-size:1rem; padding:1rem;">
             Send Partnership Inquiry
           </button>
@@ -277,8 +278,12 @@
 
   <script type="module">
     import { renderNav, renderFooter } from './components/layout.js'
+    import { esc, safeUrl } from './components/escape.js'
+    import { mountCaptcha } from './components/captcha.js'
     renderNav('Partners')
     renderFooter()
+
+    const captcha = mountCaptcha(document.getElementById('partner-captcha'))
 
     document.getElementById('partner-form').addEventListener('submit', async e => {
       e.preventDefault()
@@ -287,8 +292,16 @@
       btn.disabled = true
       btn.textContent = 'Sending…'
       alertEl.innerHTML = ''
+      const captchaToken = await captcha.token()
+      if (!captchaToken) {
+        alertEl.innerHTML = `<div class="alert alert--error">Please complete the captcha.</div>`
+        btn.disabled = false
+        btn.textContent = 'Send Partnership Inquiry'
+        return
+      }
       const form = e.target
       const payload = {
+        captchaToken,
         name:    `${form.contactName.value} (${form.orgName.value})`,
         email:   form.email.value,
         subject: `Partnership Inquiry — ${form.partnerType.value || 'General'}`,
@@ -302,14 +315,16 @@
           document.getElementById('partner-form').style.display = 'none'
           document.getElementById('partner-success').style.display = 'block'
         } else {
-          alertEl.innerHTML = `<div class="alert alert--error">${data.error || 'Submission failed.'}</div>`
+          alertEl.innerHTML = `<div class="alert alert--error">${esc(data.error || 'Submission failed.')}</div>`
           btn.disabled = false
           btn.textContent = 'Send Partnership Inquiry'
+          captcha.reset()
         }
       } catch {
         alertEl.innerHTML = `<div class="alert alert--error">Network error. Please try again.</div>`
         btn.disabled = false
         btn.textContent = 'Send Partnership Inquiry'
+        captcha.reset()
       }
     })
   </script>

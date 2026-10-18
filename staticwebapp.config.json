@@ -86,7 +86,7 @@
   "globalHeaders": {
     "X-Content-Type-Options": "nosniff",
     "X-Frame-Options": "SAMEORIGIN",
-    "Content-Security-Policy": "default-src 'self' 'unsafe-inline' 'unsafe-eval' fonts.googleapis.com fonts.gstatic.com; img-src 'self' data: blob: *.blob.core.windows.net"
+    "Content-Security-Policy": "default-src 'self' 'unsafe-inline' 'unsafe-eval' fonts.googleapis.com fonts.gstatic.com https://hcaptcha.com https://*.hcaptcha.com; img-src 'self' data: blob: *.blob.core.windows.net"
   },
   "mimeTypes": {
     ".json": "text/json"

@@ -210,6 +210,7 @@
   </div>
 
   <script type="module">
+    import { esc } from './components/escape.js'
     // Verify user is authenticated via Azure SWA auth
     async function checkAuth() {
       try {
@@ -278,13 +279,13 @@
         }
         tbody.innerHTML = dogs.dogs.map(d => `
           <tr>
-            <td><strong>${d.name}</strong><br><small style="color:var(--text-light);">${d.breed || ''}</small></td>
-            <td><span class="badge badge--${(d.status||'').toLowerCase()}">${d.status}</span></td>
-            <td>${d.city || ''}, ${d.state || ''}</td>
+            <td><strong>${esc(d.name)}</strong><br><small style="color:var(--text-light);">${esc(d.breed || '')}</small></td>
+            <td><span class="badge badge--${esc((d.status||'').toLowerCase())}">${esc(d.status)}</span></td>
+            <td>${esc(d.city || '')}, ${esc(d.state || '')}</td>
             <td>${formatDate(d.createdAt || d.dateLost)}</td>
             <td>
-              <button class="action-btn action-btn--success" onclick="markFound('${d.id}')">Mark Found</button>
-              <button class="action-btn action-btn--danger" onclick="deleteReport('${d.id}')">Delete</button>
+              <button class="action-btn action-btn--success" onclick="markFound('${esc(d.id)}')">Mark Found</button>
+              <button class="action-btn action-btn--danger" onclick="deleteReport('${esc(d.id)}')">Delete</button>
             </td>
           </tr>`).join('')
       } catch { console.error('Dashboard load error') }
@@ -300,15 +301,15 @@
           return
         }
         tbody.innerHTML = data.dogs.map(d => `
-          <tr id="dog-row-${d.id}">
-            <td><strong>${d.name}</strong><br><small>${d.color || ''} ${d.breed || ''}</small></td>
-            <td>${d.ownerName || ''}<br><small><a href="tel:${d.phone}">${d.phone || ''}</a></small></td>
-            <td><span class="badge badge--${(d.status||'').toLowerCase()}">${d.status}</span></td>
-            <td>${d.city || ''}, ${d.state || ''}</td>
+          <tr id="dog-row-${esc(d.id)}">
+            <td><strong>${esc(d.name)}</strong><br><small>${esc(d.color || '')} ${esc(d.breed || '')}</small></td>
+            <td>${esc(d.ownerName || '')}<br><small><a href="tel:${esc(d.phone)}">${esc(d.phone || '')}</a></small></td>
+            <td><span class="badge badge--${esc((d.status||'').toLowerCase())}">${esc(d.status)}</span></td>
+            <td>${esc(d.city || '')}, ${esc(d.state || '')}</td>
             <td>${formatDate(d.dateLost)}</td>
             <td style="display:flex;gap:.4rem;flex-wrap:wrap;">
-              <button class="action-btn action-btn--success" onclick="markFound('${d.id}')">Mark Found</button>
-              <button class="action-btn action-btn--danger" onclick="deleteReport('${d.id}')">Delete</button>
+              <button class="action-btn action-btn--success" onclick="markFound('${esc(d.id)}')">Mark Found</button>
+              <button class="action-btn action-btn--danger" onclick="deleteReport('${esc(d.id)}')">Delete</button>
             </td>
           </tr>`).join('')
       } catch { console.error('Dogs load error') }
@@ -325,13 +326,13 @@
         }
         tbody.innerHTML = data.messages.map(m => `
           <tr>
-            <td>${m.name || ''}</td>
-            <td><a href="mailto:${m.email}">${m.email || ''}</a></td>
-            <td>${m.subject || ''}</td>
+            <td>${esc(m.name || '')}</td>
+            <td><a href="mailto:${esc(m.email)}">${esc(m.email || '')}</a></td>
+            <td>${esc(m.subject || '')}</td>
             <td>${formatDate(m.createdAt)}</td>
             <td>
-              <button class="action-btn" onclick="viewMessage('${m.id}')">View</button>
-              <button class="action-btn action-btn--danger" onclick="deleteMessage('${m.id}')">Delete</button>
+              <button class="action-btn" onclick="viewMessage('${esc(m.id)}')">View</button>
+              <button class="action-btn action-btn--danger" onclick="deleteMessage('${esc(m.id)}')">Delete</button>
             </td>
           </tr>`).join('')
       } catch { console.error('Messages load error') }
@@ -349,9 +350,9 @@
         }
         tbody.innerHTML = data.subscribers.map(s => `
           <tr>
-            <td>${s.email}</td>
+            <td>${esc(s.email)}</td>
             <td>${formatDate(s.createdAt)}</td>
-            <td><button class="action-btn action-btn--danger" onclick="deleteSubscriber('${s.id}')">Remove</button></td>
+            <td><button class="action-btn action-btn--danger" onclick="deleteSubscriber('${esc(s.id)}')">Remove</button></td>
           </tr>`).join('')
       } catch { console.error('Subscribers load error') }
     }
@@ -397,7 +398,7 @@
       try {
         const res = await fetch(`/api/contact/${id}`)
         const m = await res.json()
-        alert(`From: ${m.name} <${m.email}>\nSubject: ${m.subject}\n\n${m.message}`)
+        alert(`From: ${esc(m.name)} <${esc(m.email)}>\nSubject: ${esc(m.subject)}\n\n${esc(m.message)}`)
       } catch { alert('Could not load message') }
     }
 

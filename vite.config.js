@@ -17,6 +17,7 @@ export default defineConfig({
         donate:       'src/donate.html',
         merch:        'src/merch.html',
         unauthorized: 'src/unauthorized.html',
+        notFound:     'src/404.html',
       }
     }
   }
