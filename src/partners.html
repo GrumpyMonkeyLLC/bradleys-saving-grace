@@ -277,6 +277,7 @@
 
   <script type="module">
     import { renderNav, renderFooter } from './components/layout.js'
+    import { esc, safeUrl } from './components/escape.js'
     renderNav('Partners')
     renderFooter()
 
@@ -302,7 +303,7 @@
           document.getElementById('partner-form').style.display = 'none'
           document.getElementById('partner-success').style.display = 'block'
         } else {
-          alertEl.innerHTML = `<div class="alert alert--error">${data.error || 'Submission failed.'}</div>`
+          alertEl.innerHTML = `<div class="alert alert--error">${esc(data.error || 'Submission failed.')}</div>`
           btn.disabled = false
           btn.textContent = 'Send Partnership Inquiry'
         }
