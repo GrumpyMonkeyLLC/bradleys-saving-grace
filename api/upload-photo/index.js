@@ -69,9 +69,9 @@ app.http('upload-photo', {
       // Read raw body as buffer
       const arrayBuffer = await request.arrayBuffer()
 
-      // Hard size limit: 3MB raw upload max
+      // Hard size limit: 5MB raw upload max
       if (arrayBuffer.byteLength > 5 * 1024 * 1024) {
-        return { status: 400, jsonBody: { error: 'Upload too large. Maximum 3MB.' } }
+        return { status: 400, jsonBody: { error: 'Upload too large. Maximum 5MB.' } }
       }
 
       const buffer = Buffer.from(arrayBuffer)

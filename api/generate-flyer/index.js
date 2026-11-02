@@ -16,6 +16,9 @@ async function ensureContainer(containerClient) {
 
 async function fetchPhoto(photoUrl) {
   if (!photoUrl) return null
+  // Only fetch photos from our own upload container, never arbitrary URLs
+  const allowed = `https://${process.env.AZURE_STORAGE_ACCOUNT_NAME}.blob.core.windows.net/dog-photos/`
+  if (!String(photoUrl).startsWith(allowed)) return null
   try {
     const res = await fetch(photoUrl)
     if (!res.ok) return null

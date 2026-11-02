@@ -84,30 +84,40 @@ app.http('lost-dogs-post', {
       for (const field of required) {
         if (!body[field]) return { status: 400, jsonBody: { error: `Missing required field: ${field}` } }
       }
+      if (!['Lost', 'Stolen'].includes(body.status)) {
+        return { status: 400, jsonBody: { error: 'Status must be Lost or Stolen.' } }
+      }
+      // Photos must come from our own upload endpoint (the dog-photos blob container)
+      const photoPrefix = `https://${process.env.AZURE_STORAGE_ACCOUNT_NAME}.blob.core.windows.net/dog-photos/`
+      if (body.photoUrl && !String(body.photoUrl).startsWith(photoPrefix)) {
+        return { status: 400, jsonBody: { error: 'Invalid photo URL.' } }
+      }
+      // Keep stored text to a sane length
+      const clip = (v, n = 200) => String(v ?? '').slice(0, n)
       const client = getClient('LostDogs')
       await ensureTable(client)
       const id = `dog-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`
       const entity = {
-        partitionKey: body.state || 'US',
+        partitionKey: clip(body.state, 40).replace(/[\/\\#?]/g, '') || 'US',
         rowKey: id,
         id,
-        name:             body.dogName,
-        breed:            body.breed,
-        color:            body.color,
-        size:             body.size || '',
-        age:              body.age || '',
-        gender:           body.gender || '',
-        microchip:        body.microchip || '',
-        description:      body.description || '',
+        name:             clip(body.dogName),
+        breed:            clip(body.breed),
+        color:            clip(body.color),
+        size:             clip(body.size),
+        age:              clip(body.age),
+        gender:           clip(body.gender),
+        microchip:        clip(body.microchip),
+        description:      clip(body.description, 2000),
         status:           body.status,
-        dateLost:         body.dateLost,
-        city:             body.city,
-        state:            body.state,
-        zip:              body.zip || '',
-        lastSeenLocation: body.lastSeenLocation || '',
-        ownerName:        body.ownerName,
-        phone:            body.phone,
-        email:            body.email,
+        dateLost:         clip(body.dateLost, 40),
+        city:             clip(body.city),
+        state:            clip(body.state),
+        zip:              clip(body.zip),
+        lastSeenLocation: clip(body.lastSeenLocation, 500),
+        ownerName:        clip(body.ownerName),
+        phone:            clip(body.phone),
+        email:            clip(body.email),
         photoUrl:         body.photoUrl || '',
         createdAt:        new Date().toISOString(),
       }

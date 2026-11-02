@@ -21,7 +21,7 @@ app.http('subscribe-post', {
     try {
       const body = await request.json()
       const email = (body.email || '').trim().toLowerCase()
-      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      if (!email || email.length > 254 || !/^[^\s@<>"'`]+@[^\s@<>"'`]+\.[^\s@<>"'`]+$/.test(email)) {
         return { status: 400, jsonBody: { error: 'Please provide a valid email address.' } }
       }
       const client = getClient()

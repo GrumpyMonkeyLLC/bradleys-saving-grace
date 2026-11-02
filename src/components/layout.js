@@ -1,7 +1,12 @@
 // Shared navigation and footer injected into every page
 
-// Resolved relative to this file so it works both from the Vite build and when src/ is served as-is
+const raffle = {
+  url: 'https://www.zeffy.com/en-US/ticketing/bradleys-hugs-incs-annual-raffle--2026',
+  ends: new Date('2026-11-15T00:00:00-05:00'),
+}
+
 const logoMark = new URL('../images/logo-mark.png', import.meta.url).href
+
 export function renderNav(activePage = '') {
   const links = [
     { href: '/index.html',    label: 'Home' },
@@ -16,7 +21,12 @@ export function renderNav(activePage = '') {
     `<li><a href="${l.href}" ${activePage === l.label ? 'style="color:var(--gold-light);"' : ''}>${l.label}</a></li>`
   ).join('')
 
-  document.getElementById('site-nav').innerHTML = `
+  const raffleBar = new Date() < raffle.ends ? `
+    <a class="event-bar" href="${raffle.url}" target="_blank" rel="noopener">
+      Our 2026 Annual Raffle runs Nov 1 – 14. <strong>Get your tickets</strong>
+    </a>` : ''
+
+  document.getElementById('site-nav').innerHTML = `${raffleBar}
     <nav class="site-nav">
       <div class="site-nav__inner">
         <a href="/index.html" class="site-nav__logo">

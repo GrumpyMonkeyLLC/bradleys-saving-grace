@@ -161,6 +161,7 @@
 
   <script type="module">
     import { renderNav, renderFooter } from './components/layout.js'
+    import { esc, safeUrl } from './components/escape.js'
     renderNav('Lost Dogs')
     renderFooter()
 
@@ -230,19 +231,20 @@
     }
 
     function dogCardHTML(dog) {
-      const img = dog.photoUrl
-        ? `<div class="card__img-wrap"><img src="${dog.photoUrl}" alt="${dog.name}" class="card__img"></div>`
+      const photo = safeUrl(dog.photoUrl)
+      const img = photo
+        ? `<div class="card__img-wrap"><img src="${photo}" alt="${esc(dog.name)}" class="card__img"></div>`
         : `<div class="card__img-wrap"><div class="card__img card__img--placeholder"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11.25 16.25h1.5L12 17z"/><path d="M16 14v.5"/><path d="M4.42 11.247A13.152 13.152 0 0 0 4 14.556C4 18.728 7.582 21 12 21s8-2.272 8-6.444a11.702 11.702 0 0 0-.493-3.309"/><path d="M8 14v.5"/><path d="M8.5 8.5c-.384 1.05-1.083 2.028-2.344 2.5-1.931.722-3.576-.297-3.656-1-.113-.994 1.177-6.53 4-7 1.923-.321 3.651.845 3.651 2.235A7.497 7.497 0 0 1 14 5.277c0-1.39 1.844-2.598 3.767-2.277 2.823.47 4.113 6.006 4 7-.08.703-1.725 1.722-3.656 1-1.261-.472-1.855-1.45-2.239-2.5"/></svg></div></div>`
       return `
-        <div class="card dog-card" data-id="${dog.id}">
+        <div class="card dog-card" data-id="${esc(dog.id)}">
           ${img}
           <div class="card__body">
             <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:.4rem;">
-              <div class="card__title">${dog.name || 'Unknown'}</div>
-              <span class="badge badge--${(dog.status||'').toLowerCase()}">${dog.status}</span>
+              <div class="card__title">${esc(dog.name || 'Unknown')}</div>
+              <span class="badge badge--${esc((dog.status||'').toLowerCase())}">${esc(dog.status)}</span>
             </div>
-            <div class="card__meta"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg> ${dog.city || ''}, ${dog.state || ''}</div>
-            <div class="card__desc">${dog.breed || ''} · ${dog.color || ''}</div>
+            <div class="card__meta"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg> ${esc(dog.city || '')}, ${esc(dog.state || '')}</div>
+            <div class="card__desc">${esc(dog.breed || '')} · ${esc(dog.color || '')}</div>
             <div class="card__meta mt-1">Missing since ${formatDate(dog.dateLost)}</div>
           </div>
         </div>`
@@ -251,35 +253,36 @@
     function openModal(id) {
       const dog = allDogs.find(d => d.id == id)
       if (!dog) return
-      const img = dog.photoUrl
-        ? `<img src="${dog.photoUrl}" alt="${dog.name}" class="modal__img">`
+      const photo = safeUrl(dog.photoUrl)
+      const img = photo
+        ? `<img src="${photo}" alt="${esc(dog.name)}" class="modal__img">`
         : `<div class="modal__img-placeholder"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11.25 16.25h1.5L12 17z"/><path d="M16 14v.5"/><path d="M4.42 11.247A13.152 13.152 0 0 0 4 14.556C4 18.728 7.582 21 12 21s8-2.272 8-6.444a11.702 11.702 0 0 0-.493-3.309"/><path d="M8 14v.5"/><path d="M8.5 8.5c-.384 1.05-1.083 2.028-2.344 2.5-1.931.722-3.576-.297-3.656-1-.113-.994 1.177-6.53 4-7 1.923-.321 3.651.845 3.651 2.235A7.497 7.497 0 0 1 14 5.277c0-1.39 1.844-2.598 3.767-2.277 2.823.47 4.113 6.006 4 7-.08.703-1.725 1.722-3.656 1-1.261-.472-1.855-1.45-2.239-2.5"/></svg></div>`
       document.getElementById('modal-content').innerHTML = `
         ${img}
         <div class="modal__body">
           <div class="modal__header">
             <div>
-              <div class="modal__title">${dog.name}</div>
-              <span class="badge badge--${(dog.status||'').toLowerCase()}">${dog.status}</span>
+              <div class="modal__title">${esc(dog.name)}</div>
+              <span class="badge badge--${esc((dog.status||'').toLowerCase())}">${esc(dog.status)}</span>
             </div>
             <button class="modal__close" id="modal-close-btn"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
           </div>
           <div class="modal__grid">
-            <div class="modal__field"><label>Breed</label><span>${dog.breed || '—'}</span></div>
-            <div class="modal__field"><label>Color</label><span>${dog.color || '—'}</span></div>
-            <div class="modal__field"><label>Size</label><span>${dog.size || '—'}</span></div>
-            <div class="modal__field"><label>Gender</label><span>${dog.gender || '—'}</span></div>
-            <div class="modal__field"><label>Age</label><span>${dog.age || '—'}</span></div>
-            <div class="modal__field"><label>Microchip</label><span>${dog.microchip || 'Unknown'}</span></div>
-            <div class="modal__field"><label>Last Seen</label><span>${dog.city || ''}, ${dog.state || ''}</span></div>
+            <div class="modal__field"><label>Breed</label><span>${esc(dog.breed || '—')}</span></div>
+            <div class="modal__field"><label>Color</label><span>${esc(dog.color || '—')}</span></div>
+            <div class="modal__field"><label>Size</label><span>${esc(dog.size || '—')}</span></div>
+            <div class="modal__field"><label>Gender</label><span>${esc(dog.gender || '—')}</span></div>
+            <div class="modal__field"><label>Age</label><span>${esc(dog.age || '—')}</span></div>
+            <div class="modal__field"><label>Microchip</label><span>${esc(dog.microchip || 'Unknown')}</span></div>
+            <div class="modal__field"><label>Last Seen</label><span>${esc(dog.city || '')}, ${esc(dog.state || '')}</span></div>
             <div class="modal__field"><label>Date Lost</label><span>${formatDate(dog.dateLost)}</span></div>
           </div>
-          ${dog.lastSeenLocation ? `<p style="font-size:.9rem;color:var(--text-mid);margin-bottom:1rem;"><strong>Location details:</strong> ${dog.lastSeenLocation}</p>` : ''}
-          ${dog.description ? `<p style="font-size:.9rem;color:var(--text-mid);"><strong>Description:</strong> ${dog.description}</p>` : ''}
+          ${dog.lastSeenLocation ? `<p style="font-size:.9rem;color:var(--text-mid);margin-bottom:1rem;"><strong>Location details:</strong> ${esc(dog.lastSeenLocation)}</p>` : ''}
+          ${dog.description ? `<p style="font-size:.9rem;color:var(--text-mid);"><strong>Description:</strong> ${esc(dog.description)}</p>` : ''}
           <div class="modal__contact">
             <h4><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg> Contact Owner</h4>
-            <p style="font-size:.9rem;color:var(--text-mid);">${dog.ownerName || ''} · ${dog.phone || ''}</p>
-            ${dog.email ? `<a href="mailto:${dog.email}" class="btn btn--brown mt-2" style="padding:.55rem 1.25rem;font-size:.82rem;">Send Email</a>` : ''}
+            <p style="font-size:.9rem;color:var(--text-mid);">${esc(dog.ownerName || '')} · ${esc(dog.phone || '')}</p>
+            ${dog.email ? `<a href="mailto:${esc(dog.email)}" class="btn btn--brown mt-2" style="padding:.55rem 1.25rem;font-size:.82rem;">Send Email</a>` : ''}
           </div>
         </div>`
       document.getElementById('modal-overlay').classList.add('open')
