@@ -128,7 +128,7 @@
             <h2>Lost Dog Report</h2>
             <div id="form-alert"></div>
 
-            <form id="report-form" novalidate>
+            <form id="report-form">
 
               <div class="form-section-label">About the Dog</div>
               <div class="form-grid">
@@ -472,6 +472,7 @@
         ownerName:        formData.get('ownerName'),
         phone:            formData.get('phone'),
         email:            formData.get('email'),
+        consent:          formData.get('consent') === 'on',
         photoUrl,
       }
 
