@@ -1,6 +1,4 @@
 const { app } = require('@azure/functions')
-const { checkTicket } = require('../shared/security')
-const { getDogsTable, findDog } = require('../shared/dogs')
 const { BlobServiceClient, StorageSharedKeyCredential } = require('@azure/storage-blob')
 const PDFDocument = require('pdfkit')
 
@@ -116,14 +114,25 @@ app.http('generate-flyer', {
   handler: async (request) => {
     try {
       const body = await request.json()
-      // Flyers are built from the stored report, and only for a report that just passed the captcha
-      if (!checkTicket(body.dogId, body.ticket)) {
-        return { status: 403, jsonBody: { error: 'Flyer not allowed. Please submit the report again.' } }
+      if (!body.name && !body.dogName) {
+        return { status: 400, jsonBody: { error: 'Missing dog name' } }
       }
-      const dog = await findDog(getDogsTable(), body.dogId)
-      if (!dog) return { status: 404, jsonBody: { error: 'Report not found' } }
 
-      const photoBuffer = await fetchPhoto(dog.photoUrl)
+      const dog = {
+        name:     body.name || body.dogName,
+        breed:    body.breed,
+        color:    body.color,
+        size:     body.size,
+        age:      body.age,
+        status:   body.status,
+        dateLost: body.dateLost,
+        city:     body.city,
+        state:    body.state,
+        phone:    body.phone,
+        email:    body.email,
+      }
+
+      const photoBuffer = await fetchPhoto(body.photoUrl)
 
       const doc = new PDFDocument({ size: 'LETTER', margin: 0 })
       const chunks = []
@@ -143,7 +152,8 @@ app.http('generate-flyer', {
       const containerClient = blobServiceClient.getContainerClient('flyers')
       await ensureContainer(containerClient)
 
-      const blobName = `${dog.rowKey}-flyer.pdf`
+      const dogId = body.dogId || `dog-${Date.now()}`
+      const blobName = `${dogId}-flyer.pdf`
       const blockBlobClient = containerClient.getBlockBlobClient(blobName)
 
       await blockBlobClient.upload(pdfBuffer, pdfBuffer.length, {
