@@ -407,6 +407,10 @@
         })
         const data = await res.json()
         msg.style.display = 'block'
+        if (!res.ok) {
+          msg.textContent = data.error || 'Something went wrong. Please try again.'
+          return
+        }
         msg.textContent = data.message || 'Thank you! We\'ll be in touch.'
         document.getElementById('newsletter-email').value = ''
       } catch {
