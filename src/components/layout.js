@@ -85,6 +85,7 @@ export function renderFooter() {
         <a href="/merch.html">Merch</a>
         <a href="/contact.html">Contact</a>
         <a href="/partners.html">Partners</a>
+        <a href="/privacy.html">Privacy</a>
         <a href="/admin.html">Admin</a>
         <a href="https://www.facebook.com/profile.php?id=61586951067313" target="_blank">Facebook</a>
       </nav>

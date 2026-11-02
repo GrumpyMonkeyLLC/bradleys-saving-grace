@@ -18,6 +18,7 @@ export default defineConfig({
         merch:        'src/merch.html',
         unauthorized: 'src/unauthorized.html',
         notFound:     'src/404.html',
+        privacy:      'src/privacy.html',
       }
     }
   }
