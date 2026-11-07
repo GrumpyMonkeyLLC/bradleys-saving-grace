@@ -84,6 +84,9 @@ app.http('lost-dogs-post', {
       for (const field of required) {
         if (!body[field]) return { status: 400, jsonBody: { error: `Missing required field: ${field}` } }
       }
+      if (body.consent !== true) {
+        return { status: 400, jsonBody: { error: 'Please agree to having this report posted publicly.' } }
+      }
       if (!['Lost', 'Stolen'].includes(body.status)) {
         return { status: 400, jsonBody: { error: 'Status must be Lost or Stolen.' } }
       }

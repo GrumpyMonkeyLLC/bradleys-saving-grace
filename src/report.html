@@ -128,7 +128,7 @@
             <h2>Lost Dog Report</h2>
             <div id="form-alert"></div>
 
-            <form id="report-form" novalidate>
+            <form id="report-form">
 
               <div class="form-section-label">About the Dog</div>
               <div class="form-grid">
@@ -253,7 +253,7 @@
                 <label style="display:flex;align-items:flex-start;gap:.75rem;cursor:pointer;">
                   <input type="checkbox" id="consent" name="consent" required style="width:auto;margin-top:3px;">
                   <span style="font-size:0.85rem;color:var(--text-mid);font-weight:300;">
-                    I consent to Bradley's Hugs posting this information publicly to help find my dog. I confirm the information is accurate to the best of my knowledge.
+                    I consent to Bradley's Hugs posting this information publicly to help find my dog. I confirm the information is accurate to the best of my knowledge. See our <a href="/privacy.html" target="_blank">Privacy Policy</a>.
                   </span>
                 </label>
               </div>
@@ -472,6 +472,7 @@
         ownerName:        formData.get('ownerName'),
         phone:            formData.get('phone'),
         email:            formData.get('email'),
+        consent:          formData.get('consent') === 'on',
         photoUrl,
       }
 
